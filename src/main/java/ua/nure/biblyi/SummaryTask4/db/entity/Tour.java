@@ -9,7 +9,7 @@ public class Tour extends Entity {
 
     private String name;
 
-    private double cost;
+    private int cost;
 
     private double duration;
 
@@ -19,7 +19,29 @@ public class Tour extends Entity {
 
     private int typeId;
 
+    private int statusId;
 
+    private int countryId;
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    public void setHotelId(long hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 
     public String getName() {
         return name;
@@ -29,11 +51,11 @@ public class Tour extends Entity {
         this.name = name;
     }
 
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
