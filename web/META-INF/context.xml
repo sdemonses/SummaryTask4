@@ -1,0 +1,10 @@
+<Context>
+
+    <Resource name="jdbc/testdb" auth="Container" type="javax.sql.DataSource"
+              username="testuser"
+              password="testpass"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/tourOp"
+              maxActive="10"/>
+
+</Context>
