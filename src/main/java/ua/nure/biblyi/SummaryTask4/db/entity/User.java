@@ -2,7 +2,6 @@ package ua.nure.biblyi.SummaryTask4.db.entity;
 
 /**
  *
- *
  * @author Biblyi Dmytro
  */
 public class User extends Entity {

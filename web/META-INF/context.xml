@@ -1,6 +1,6 @@
 <Context>
 
-    <Resource name="jdbc/testdb" auth="Container" type="javax.sql.DataSource"
+    <Resource name="jdbc/tourOp" auth="Container" type="javax.sql.DataSource"
               username="testuser"
               password="testpass"
               driverClassName="com.mysql.jdbc.Driver"

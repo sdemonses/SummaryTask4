@@ -1,7 +1,7 @@
 package ua.nure.biblyi.SummaryTask4.db.entity;
 
 /**
- * Created by dmitry on 12.01.17.
+ * @author dmitry
  */
 public class Tour extends Entity {
 

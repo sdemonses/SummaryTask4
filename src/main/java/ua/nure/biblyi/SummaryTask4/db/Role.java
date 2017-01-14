@@ -1,4 +1,6 @@
-package ua.nure.biblyi.SummaryTask4.db.entity;
+package ua.nure.biblyi.SummaryTask4.db;
+
+import ua.nure.biblyi.SummaryTask4.db.entity.User;
 
 /**
  * Created by dmitry on 12.01.17.
