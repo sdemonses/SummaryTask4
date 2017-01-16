@@ -1,11 +1,13 @@
 package ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO;
 
+import org.apache.log4j.Logger;
+import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.DBManager;
 import ua.nure.biblyi.SummaryTask4.db.entity.Entity;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +15,7 @@ import java.util.List;
  */
 public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> implements GenericDao<T, PK> {
 
-    private Connection connection;
-
-    public AbstractJDBCDao(Connection connection) {
-        this.connection = connection;
-    }
+    private static final Logger LOG = Logger.getLogger(AbstractJDBCDao.class);
 
     /**
      * Возвращает sql запрос для получения всех записей.
@@ -50,7 +48,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
     /**
      * Разбирает ResultSet и возвращает список объектов соответствующих содержимому ResultSet.
      */
-    protected abstract List<T> parseResultSet(ResultSet rs) throws DAOException;
+    protected abstract T parseResultSet(ResultSet rs) throws DAOException;
 
     /**
      * Устанавливает аргументы insert запроса в соответствии со значением полей объекта object.
@@ -62,99 +60,175 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
      */
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws DAOException;
 
+
     @Override
     public T insert(T object) throws DAOException {
-        T persistInstance;
-        // Добавляем запись
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
         String sql = getCreateQuery();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            prepareStatementForInsert(statement, object);
-            int count = statement.executeUpdate();
-            if (count != 1) {
-                throw new DAOException("On insert modify more then 1 record: " + count);
+        try {
+            con = DBManager.getInstance().getConnection();
+            pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            prepareStatementForInsert(pstmt, object);
+            int count = pstmt.executeUpdate();
+            if (count == 1) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    object.setId(rs.getLong(1));
+                } else {
+                    throw new DAOException(ErrorMessage.EMPTY_RESULT_SET);
+                }
+            } else {
+                throw new DAOException("On persist modify more then 1 record: " + count);
             }
-        } catch (Exception e) {
-            throw new DAOException(e);
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_INSERT_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_INSERT_ENTRY, e);
+        } finally {
+            close(con);
+            close(pstmt);
+            close(rs);
         }
-        // Получаем только что вставленную запись
-        sql = getSelectQuery() + " WHERE id = last_insert_id();";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            ResultSet rs = statement.executeQuery();
-            List<T> list = parseResultSet(rs);
-            if ((list == null) || (list.size() != 1)) {
-                throw new DAOException("Exception on findByPK new insert data.");
-            }
-            persistInstance = list.iterator().next();
-        } catch (Exception e) {
-            throw new DAOException(e);
-        }
-        return persistInstance;
+        return object;
     }
 
     @Override
-    public T getByPK(Integer key) throws DAOException {
-        List<T> list;
+    public T getByPK(PK key) throws DAOException {
+        T object;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, key);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (Exception e) {
-            throw new DAOException(e);
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = DBManager.getInstance().getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, key);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                object = parseResultSet(rs);
+            } else {
+                throw new DAOException((ErrorMessage.ERR_CANNOT_FIND_ENTRY));
+            }
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+        } finally {
+            close(con);
+            close(pstmt);
+            close(rs);
         }
-        if (list == null || list.size() == 0) {
-            throw new DAOException("Record with PK = " + key + " not found.");
-        }
-        if (list.size() > 1) {
-            throw new DAOException("Received more than one record.");
-        }
-        return list.iterator().next();
+        return object;
     }
 
     @Override
     public void update(T object) throws DAOException {
         String sql = getUpdateQuery();
-        try (PreparedStatement statement = connection.prepareStatement(sql);) {
-            prepareStatementForUpdate(statement, object); // заполнение аргументов запроса оставим на совесть потомков
-            int count = statement.executeUpdate();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = DBManager.getInstance().getConnection();
+            pstmt = con.prepareStatement(sql);
+            prepareStatementForUpdate(pstmt, object);
+            int count = pstmt.executeUpdate();
             if (count != 1) {
-                throw new DAOException("On update modify more then 1 record: " + count);
+                LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE);
+                throw new DAOException(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE + count);
             }
-        } catch (Exception e) {
-            throw new DAOException(e);
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY, e);
+        } finally {
+            close(con);
+            close(pstmt);
         }
     }
 
     @Override
     public void delete(T object) throws DAOException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
         String sql = getDeleteQuery();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            try {
-                statement.setObject(1, object.getId());
-            } catch (Exception e) {
-                throw new DAOException(e);
-            }
-            int count = statement.executeUpdate();
+        try {
+            con = DBManager.getInstance().getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setObject(1, object.getId());
+            int count = pstmt.executeUpdate();
             if (count != 1) {
-                throw new DAOException("On delete modify more then 1 record: " + count);
+                LOG.error(ErrorMessage.ERR_CANNOT_DELETE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE + count);
+                throw new DAOException(ErrorMessage.ERR_CANNOT_DELETE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE + count);
             }
-            statement.close();
-        } catch (Exception e) {
-            throw new DAOException(e);
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_DELETE_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_DELETE_ENTRY, e);
+        }finally {
+            close(con);
+            close(pstmt);
         }
     }
 
     @Override
     public List<T> getAll() throws DAOException {
-        List<T> list;
+        List<T> list = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
         String sql = getSelectQuery();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (Exception e) {
-            throw new DAOException(e);
+        try {
+            con = DBManager.getInstance().getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                list.add(parseResultSet(rs));
+            }
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+        } finally {
+            close(con);
+            close(stmt);
+            close(rs);
         }
         return list;
+    }
+
+    /**
+     * Closes a connection.
+     *
+     * @param closeable AutoCloseable to be closed.
+     */
+    private void close(AutoCloseable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception e) {
+                LOG.error(ErrorMessage.ERR_CANNOT_CLOSE_CONNECTION + closeable.getClass().getSimpleName());
+            }
+        }
+    }
+
+    /**
+     * Rollbacks a connection.
+     *
+     * @param con Connection to be rollbacked.
+     */
+    private void rollback(Connection con) {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                LOG.error(ErrorMessage.ERR_CANNOT_ROLLBACK_TRANSACTION, ex);
+            }
+        }
     }
 }

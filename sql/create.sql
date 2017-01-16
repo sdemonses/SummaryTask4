@@ -24,15 +24,16 @@ INSERT INTO roles VALUES (2, 'manager');
 CREATE TABLE users (
   id         INTEGER      PRIMARY KEY AUTO_INCREMENT,
   login      VARCHAR(25)  NOT NULL UNIQUE,
+  email      VARCHAR(40)  NOT NULL UNIQUE,
   password   VARCHAR(255) NOT NULL,
   first_name VARCHAR(50)  NOT NULL,
   last_name  VARCHAR(50)  NOT NULL,
   role_id    INTEGER      NOT NULL REFERENCES roles (id)
 );
 
-INSERT INTO users VALUES (DEFAULT, 'admin', 'admin', 'Ivan', 'Ivanov', 0);
-INSERT INTO users VALUES (DEFAULT, 'client', 'client', 'Petr', 'Petrov', 1);
-INSERT INTO users VALUES (DEFAULT, 'manager', 'manager', 'Дмитрий', 'Дмитриев', 2);
+INSERT INTO users VALUES (DEFAULT, 'admin', 'sdemonses@gmail.com', 'admin', 'Ivan', 'Ivanov', 0);
+INSERT INTO users VALUES (DEFAULT, 'client', 'sdemones@gmail.com',  'client', 'Petr', 'Petrov', 1);
+INSERT INTO users VALUES (DEFAULT, 'manager', 'sdemoses@gmail.com', 'manager', 'Дмитрий', 'Дмитриев', 2);
 
 
 CREATE TABLE countries (

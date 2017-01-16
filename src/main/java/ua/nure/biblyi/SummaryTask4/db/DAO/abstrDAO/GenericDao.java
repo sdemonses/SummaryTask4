@@ -19,11 +19,6 @@ import java.util.List;
 public interface GenericDao<T extends Entity, PK extends Serializable> {
 
     /**
-     * Создает новую запись и соответствующий ей объект
-     */
-    T create() throws DAOException;
-
-    /**
      * Создает новую запись, соответствующую объекту object
      */
     T insert(T object) throws DAOException;

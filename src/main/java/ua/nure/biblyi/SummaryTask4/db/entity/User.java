@@ -16,6 +16,8 @@ public class User extends Entity {
 
     private String lastName;
 
+    private String email;
+
     private int roleId;
 
 
@@ -68,5 +70,13 @@ public class User extends Entity {
                 ", lastName='" + lastName + '\'' +
                 ", roleId=" + roleId +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
