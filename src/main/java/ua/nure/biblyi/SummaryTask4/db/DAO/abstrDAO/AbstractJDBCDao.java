@@ -53,12 +53,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
     /**
      * Устанавливает аргументы insert запроса в соответствии со значением полей объекта object.
      */
-    protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws DAOException;
-
-    /**
-     * Устанавливает аргументы update запроса в соответствии со значением полей объекта object.
-     */
-    protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws DAOException;
+    protected abstract int prepareStatementCommon(PreparedStatement statement, T object) throws DAOException;
 
 
     @Override
@@ -70,7 +65,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
         try {
             con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            prepareStatementForInsert(pstmt, object);
+            prepareStatementCommon(pstmt, object);
             int count = pstmt.executeUpdate();
             if (count == 1) {
                 rs = pstmt.getGeneratedKeys();
@@ -134,7 +129,8 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
         try {
             con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(sql);
-            prepareStatementForUpdate(pstmt, object);
+            int pos = prepareStatementCommon(pstmt, object);
+            pstmt.setLong(pos, object.getId());
             int count = pstmt.executeUpdate();
             if (count != 1) {
                 LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE);
@@ -207,7 +203,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
      *
      * @param closeable AutoCloseable to be closed.
      */
-    private void close(AutoCloseable closeable) {
+    protected void close(AutoCloseable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -222,7 +218,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
      *
      * @param con Connection to be rollbacked.
      */
-    private void rollback(Connection con) {
+    protected void rollback(Connection con) {
         if (con != null) {
             try {
                 con.rollback();

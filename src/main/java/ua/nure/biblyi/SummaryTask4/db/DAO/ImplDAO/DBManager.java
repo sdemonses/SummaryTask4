@@ -47,6 +47,7 @@ public class DBManager {
         Connection con;
         try {
             con = ds.getConnection();
+            con.setAutoCommit(false);
         } catch (SQLException ex) {
             LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_CONNECTION, ex);
             throw new DAOException(ErrorMessage.ERR_CANNOT_OBTAIN_CONNECTION, ex);

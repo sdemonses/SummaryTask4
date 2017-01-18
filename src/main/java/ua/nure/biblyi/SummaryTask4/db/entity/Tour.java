@@ -11,7 +11,7 @@ public class Tour extends Entity {
 
     private int cost;
 
-    private double duration;
+    private int duration;
 
     private int person;
 
@@ -21,13 +21,13 @@ public class Tour extends Entity {
 
     private int statusId;
 
-    private int countryId;
+    private long countryId;
 
-    public int getCountryId() {
+    public long getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(long countryId) {
         this.countryId = countryId;
     }
 
@@ -59,11 +59,11 @@ public class Tour extends Entity {
         this.cost = cost;
     }
 
-    public double getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(double duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -77,10 +77,6 @@ public class Tour extends Entity {
 
     public long getHotelId() {
         return hotelId;
-    }
-
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
     }
 
     public int getTypeId() {

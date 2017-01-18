@@ -3,8 +3,13 @@
     <Resource name="jdbc/tourOp" auth="Container" type="javax.sql.DataSource"
               username="testuser"
               password="testpass"
-              driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/tourOp"
-              maxActive="10"/>
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              autoReconnect="true"
+              useSSL="false"
+              verifyServerCertificate="false"
+              url="jdbc:mysql://localhost:3306/tourOp?useSSL=false"
+              maxActive="100"
+              maxIdle="30"
+              maxWait="10000"/>
 
 </Context>

@@ -38,15 +38,13 @@ INSERT INTO users VALUES (DEFAULT, 'manager', 'sdemoses@gmail.com', 'manager', '
 
 CREATE TABLE countries (
   id      INTEGER PRIMARY KEY AUTO_INCREMENT,
-  name_ru VARCHAR(30) NOT NULL,
-  name_en VARCHAR(30) NOT NULL
+  name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE cities (
   id         INTEGER PRIMARY KEY AUTO_INCREMENT,
   country_id INTEGER     NOT NULL REFERENCES countries (id),
-  name_ru    VARCHAR(30) NOT NULL,
-  name_en    VARCHAR(30) NOT NULL
+  name    VARCHAR(30) NOT NULL
 );
 
 
@@ -82,7 +80,8 @@ INSERT INTO type VALUES (2, 'rest');
 CREATE TABLE tours (
   id        INTEGER PRIMARY KEY AUTO_INCREMENT,
   name      VARCHAR(10) NOT NULL,
-  county_id INTEGER     NOT NULL REFERENCES countries (id),
+  duration INTEGER,
+  country_id INTEGER     NOT NULL REFERENCES countries (id),
   hotel_id  INTEGER     NOT NULL REFERENCES hotels (id),
   type_id   INTEGER     NOT NULL REFERENCES type (id),
   status_id INTEGER     NOT NULL REFERENCES statuses (id),
