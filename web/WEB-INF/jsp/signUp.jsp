@@ -34,22 +34,42 @@
             <input type="hidden" name="command" value="signUp"/>
 
             <div class="form-group">
-                <label for="contact-name">Login:</label>
-                <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name">
+                <label for="login"><fmt:message key="form.login"/></label>
+                <input type="text" name="login" placeholder="<fmt:message key="form.enterLogin"/>" class="contact-name"
+                       id="login">
             </div>
 
             <div class="form-group">
-                <label for="contact-name">Login:</label>
-                <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name">
+                <label for="email"><fmt:message key="form.email"/>:</label>
+                <input type="email" name="email" placeholder="<fmt:message key="form.enterEmail"/>" class="contact-name"
+                       id="email">
             </div>
 
             <div class="form-group">
-                <label for="contact-email">Password:</label>
-                <input type="password" name="password" placeholder="Enter your password..." class="contact-email"
-                       id="contact-email">
+                <label for="firstName"><fmt:message key="form.firstName"/>:</label>
+                <input type="text" name="firstName" placeholder="<fmt:message key="form.enterFirstName"/>"
+                       class="contact-name" id="firstName">
             </div>
 
-            <button type="submit" class="btn">Sign In</button>
+            <div class="form-group">
+                <label for="lastName"><fmt:message key="form.lastName"/>:</label>
+                <input type="text" name="lastName" placeholder="<fmt:message key="form.enterLastName"/>"
+                       class="contact-name" id="lastName">
+            </div>
+
+            <div class="form-group">
+                <label for="password"><fmt:message key="form.password"/>:</label>
+                <input type="password" name="password" placeholder="<fmt:message key="form.enterPassword"/>" class="contact-email"
+                       id="password">
+            </div>
+
+            <div class="form-group">
+                <label for="repeatPassword"><fmt:message key="form.repeatPassword"/>:</label>
+                <input type="password" name="repeatPassword" placeholder="<fmt:message key="form.enterPassword"/>" class="contact-email"
+                       id="repeatPassword">
+            </div>
+
+            <button type="submit" class="btn"><fmt:message key="signUp"/></button>
         </form>
 
     </div>

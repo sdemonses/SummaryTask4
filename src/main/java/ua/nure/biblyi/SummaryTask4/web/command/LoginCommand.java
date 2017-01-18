@@ -24,10 +24,11 @@ public class LoginCommand extends Command {
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
         LOG.debug("LoginCommand.execute start");
+
         String result = null;
         if (TypeHttpRequest.POST == type) {
             result = doPost(httpServletRequest, httpServletResponse);
-        }else{
+        } else {
             result = Path.PAGE_SIGN_IN;
         }
         LOG.debug("LoginCommand.execute finish");

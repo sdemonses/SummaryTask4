@@ -6,6 +6,9 @@ import org.apache.log4j.PropertyConfigurator;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Created by dmitry on 17.01.17.

@@ -30,7 +30,6 @@
     <div class="col-sm-offset-3  col-sm-6 contact-form">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
-
             <div class="form-group">
                 <label for="contact-name">Login:</label>
                 <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name">

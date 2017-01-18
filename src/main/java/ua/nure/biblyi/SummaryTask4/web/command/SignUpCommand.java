@@ -33,7 +33,7 @@ public class SignUpCommand extends Command {
         if (TypeHttpRequest.POST == type) {
             result = doPost(httpServletRequest, httpServletResponse);
         }else{
-            result = Path.PAGE_SIGN_IN;
+            result = Path.PAGE_SIGN_UP;
         }
         LOG.debug("SignUpCommand.execute finish");
         return result;

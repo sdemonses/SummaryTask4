@@ -47,12 +47,28 @@
 
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login signUp index contact about</param-value>
+            <param-value>login signUp index contact about language</param-value>
         </init-param>
     </filter>
 
     <filter-mapping>
         <filter-name>CommandAccessFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>ua.nure.biblyi.SummaryTask4.web.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/WEB-INF/*</url-pattern>
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 

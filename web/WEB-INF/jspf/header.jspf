@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <nav class="navbar" role="navigation">
+
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
@@ -24,16 +25,45 @@
                 <li>
                     <a href="services.html"><i class="fa fa-tasks"></i><br>Services</a>
                 </li>
+
                 <li>
-                    <a href="about.html"><i class="fa fa-user"></i><br>About</a>
+                    <a href="about.html"><i class="fa fa-user"></i><br>${button}</a>
                 </li>
                 <li>
-                    <a href="signIn.jsp"><i class="fa fa-envelope"></i><br>Contact</a>
+                    <a href="controller?command=signUp"><i class="fa fa-envelope"></i><br>Contact</a>
                 </li>
                 <li>
                     <a href="controller?command=login"><i class="fa fa-user"></i><br>Sign In</a>
                 </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000">
+                        <i class="fa fa-paperclip"></i><br><fmt:message key="footer.language"/> <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li>
+                            <form action="controller" method="post">
+                                <input type="hidden" name="command" value="language"/>
+                                <input type="hidden" name="language" value="en">
+
+                                <input type="submit" value="<fmt:message key="footer.language.english"/>">
+                            </form>
+                        </li>
+                        <li>
+                            <form action="controller" method="post">
+                                <input type="hidden" name="command" value="language"/>
+                                <input type="hidden" name="language" value="ru">
+                                <input type="submit" value="<fmt:message key="footer.language.russian"/>">
+                            </form>
+                        </li>
+
+                    </ul>
+
+                </li>
             </ul>
         </div>
+
     </div>
 </nav>
