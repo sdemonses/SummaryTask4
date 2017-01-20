@@ -33,6 +33,7 @@
             <div class="form-group">
                 <label for="type"><fmt:message key="tours.filter.type"/></label>
                 <select name="type" id="type">
+                    <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <option value="rest"><fmt:message key="tours.filter.rest"/></option>
                     <option value="shopping"><fmt:message key="tours.filter.shopping"/></option>
                     <option value="excursion"><fmt:message key="tours.filter.excursion"/></option>

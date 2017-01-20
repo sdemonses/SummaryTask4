@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <i class="fa fa-envelope"></i>
                 <h1><fmt:message key="profile"/>/</h1>
-                <p><fmt:message key="profille.info"/></p>
+                <p><fmt:message key="profile.info"/></p>
             </div>
         </div>
     </div>

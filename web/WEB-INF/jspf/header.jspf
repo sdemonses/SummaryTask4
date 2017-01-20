@@ -27,18 +27,35 @@
                 </li>
 
                 <li>
-                    <a href="about.html"><i class="fa fa-user"></i><br>${button}</a>
+                    <a href="about.html"><i class="fa fa-user"></i><br><fmt:message key="header.about"/></a>
                 </li>
-                <li>
-                    <a href="controller?command=signUp"><i class="fa fa-envelope"></i><br>Contact</a>
-                </li>
-                <li>
-                    <a href="controller?command=login"><i class="fa fa-user"></i><br>Sign In</a>
-                </li>
+                <c:if test="${empty sessionScope.user}">
+                    <li>
+                        <a href="controller?command=signUp"><i class="fa fa-user"></i><br><fmt:message
+                                key="header.signUp"/></a>
+                    </li>
+                    <li>
+                        <a href="controller?command=login"><i class="fa fa-sign-in"></i><br><fmt:message
+                                key="header.signIn"/></a>
+                    </li>
+                </c:if>
+                <c:if test="${not empty sessionScope.user}">
+                    <li>
+                        <a href="controller?command=profile"><i class="fa fa-user"></i><br><fmt:message
+                                key="header.profile"/></a>
+                    </li>
+                    <li>
+                        <a href="controller?command=logout"><i class="fa fa-sign-out"></i><br><fmt:message
+                                key="header.logout"/></a>
+                    </li>
+
+                </c:if>
+
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000">
-                        <i class="fa fa-paperclip"></i><br><fmt:message key="footer.language"/> <span class="caret"></span>
+                        <i class="fa fa-paperclip"></i><br><fmt:message key="header.language"/> <span
+                            class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
@@ -48,14 +65,14 @@
                                 <input type="hidden" name="command" value="language"/>
                                 <input type="hidden" name="language" value="en">
 
-                                <input type="submit" value="<fmt:message key="footer.language.english"/>">
+                                <input type="submit" value="<fmt:message key="header.language.english"/>">
                             </form>
                         </li>
                         <li>
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="language"/>
                                 <input type="hidden" name="language" value="ru">
-                                <input type="submit" value="<fmt:message key="footer.language.russian"/>">
+                                <input type="submit" value="<fmt:message key="header.language.russian"/>">
                             </form>
                         </li>
 

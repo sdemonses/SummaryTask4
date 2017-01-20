@@ -1,14 +1,15 @@
 package ua.nure.biblyi.SummaryTask4.core;
 import org.junit.Assert;
 import org.junit.Test;
-import ua.nure.biblyi.SummaryTask4.exception.ValidationExceptiom;
+import ua.nure.biblyi.SummaryTask4.core.validation.EmailValidation;
+import ua.nure.biblyi.SummaryTask4.exception.ValidationException;
 
 /**
  * Created by dmitry on 17.01.17.
  */
 public class EmailValidationTest {
     @Test
-    public void validateValid() throws ValidationExceptiom {
+    public void validateValid() throws ValidationException {
         EmailValidation emailValidation = new EmailValidation();
         String[] mass = new String[]{
                 "alex@yandex.ru",
@@ -27,8 +28,8 @@ public class EmailValidationTest {
         }
     }
 
-    @Test(expected = ValidationExceptiom.class)
-    public void validateInvalid() throws ValidationExceptiom {
+    @Test(expected = ValidationException.class)
+    public void validateInvalid() throws ValidationException {
         EmailValidation emailValidation = new EmailValidation();
         String[] mass = new String[]{
                 "devcolibri",

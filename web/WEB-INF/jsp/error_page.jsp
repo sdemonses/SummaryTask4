@@ -1,12 +1,11 @@
 <%@ page isErrorPage="true" %>
 <%@ page import="java.io.PrintWriter" %>
-
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <html>
-
-<c:set var="title" value="Error" scope="page" />
+<c:set var="title" value="Error" />
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
-	
 <body>
 
 	<table id="main-container">
@@ -37,7 +36,7 @@
 				</c:if>
 				
 				<c:if test="${not empty exception}">
-					<% exception.printStackTrace(new PrintWriter(out)); %>
+					<% exception.printStackTrace(new PrintWriter(System.out)); %>
 				</c:if>
 				
 				<%-- if we get this page using forward --%>
