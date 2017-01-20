@@ -1,5 +1,8 @@
 package ua.nure.biblyi.SummaryTask4.db.entity;
 
+import ua.nure.biblyi.SummaryTask4.db.Status;
+import ua.nure.biblyi.SummaryTask4.db.Type;
+
 /**
  * @author dmitry
  */
@@ -15,32 +18,24 @@ public class Tour extends Entity {
 
     private int person;
 
-    private long hotelId;
+    private Hotel hotel;
 
-    private int typeId;
+    private Type type;
 
-    private int statusId;
+    private Status status;
 
-    private long countryId;
+    private User user;
 
-    public long getCountryId() {
-        return countryId;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
-    public void setCountryId(long countryId) {
-        this.countryId = countryId;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setHotelId(long hotelId) {
-        this.hotelId = hotelId;
-    }
-
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(int status) {
+        this.status = Status.getType(status);
     }
 
     public String getName() {
@@ -75,16 +70,37 @@ public class Tour extends Entity {
         this.person = person;
     }
 
-    public long getHotelId() {
-        return hotelId;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public Type getType() {
+        return type;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setType(int typeId) {
+        this.type = Type.getType(typeId);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Tour{" +
+                "name='" + name + '\'' +
+                ", cost=" + cost +
+                ", duration=" + duration +
+                ", person=" + person +
+                ", hotel=" + hotel +
+                ", type=" + type +
+                ", status=" + status +
+                ", user=" + user +
+                '}';
+    }
 }

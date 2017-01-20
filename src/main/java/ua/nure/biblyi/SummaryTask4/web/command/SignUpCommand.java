@@ -2,15 +2,14 @@ package ua.nure.biblyi.SummaryTask4.web.command;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
-import ua.nure.biblyi.SummaryTask4.core.EmailValidation;
-import ua.nure.biblyi.SummaryTask4.core.LoginValidation;
+import ua.nure.biblyi.SummaryTask4.core.validation.EmailValidation;
+import ua.nure.biblyi.SummaryTask4.core.validation.FieldValidation;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.Role;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
-import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
-import ua.nure.biblyi.SummaryTask4.exception.ValidationExceptiom;
+import ua.nure.biblyi.SummaryTask4.exception.ValidationException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,13 +47,17 @@ public class SignUpCommand extends Command {
 
         String password = httpServletRequest.getParameter("password");
         String repeatPassword = httpServletRequest.getParameter("repeatPassword");
+        String firstName = httpServletRequest.getParameter("firstName");
+        String lastName = httpServletRequest.getParameter("lastName");
 
-        LoginValidation loginValidation = new LoginValidation();
+        FieldValidation fieldValidation = new FieldValidation();
 
         try {
-            loginValidation.validate(login);
-        } catch (ValidationExceptiom validationExceptiom) {
-            validationExceptiom.printStackTrace();
+            fieldValidation.validate(login);
+            fieldValidation.validate(firstName);
+            fieldValidation.validate(lastName);
+        } catch (ValidationException validationException) {
+            validationException.printStackTrace();
         }
 
         String email = httpServletRequest.getParameter("email");
@@ -62,8 +65,8 @@ public class SignUpCommand extends Command {
         EmailValidation emailValidation = new EmailValidation();
         try {
             emailValidation.validate(email);
-        } catch (ValidationExceptiom validationExceptiom) {
-            validationExceptiom.printStackTrace();
+        } catch (ValidationException validationException) {
+            validationException.printStackTrace();
         }
 
         if(!password.equals(repeatPassword)){
@@ -71,15 +74,12 @@ public class SignUpCommand extends Command {
         }
         UserDAO userDAO = new UserDAO();
 
-        String firstName = httpServletRequest.getParameter("firstName");
-        String lastName = httpServletRequest.getParameter("lastName");
-
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setLogin(login);
         user.setEmail(email);
-        user.setRoleId(1);
+        user.setRole(1);
         user.setPassword(password);
 
         LOG.trace("Insert in DB: user --> " + user);
@@ -91,7 +91,7 @@ public class SignUpCommand extends Command {
 
         httpSession.setAttribute("user", user);
 
-        Role userRole = Role.getRole(user);
+        Role userRole = user.getRole();
         LOG.trace("userRole --> " + userRole);
         httpSession.setAttribute("userRole", userRole);
         LOG.debug("SignUpCommand.doPost finish");

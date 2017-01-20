@@ -1,5 +1,7 @@
 package ua.nure.biblyi.SummaryTask4.db.entity;
 
+import ua.nure.biblyi.SummaryTask4.db.Role;
+
 /**
  *
  * @author Biblyi Dmytro
@@ -18,7 +20,7 @@ public class User extends Entity {
 
     private String email;
 
-    private int roleId;
+    private Role role;
 
 
     public String getLogin() {
@@ -53,14 +55,13 @@ public class User extends Entity {
         this.lastName = lastName;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(int role) {
+        this.role = Role.getRole(role);
     }
-
 
     @Override
     public String toString() {
@@ -68,7 +69,8 @@ public class User extends Entity {
                 "login='" + login + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", roleId=" + roleId +
+                ", email='" + email + '\'' +
+                ", role=" + role +
                 '}';
     }
 

@@ -13,7 +13,7 @@ import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 public class UserDAOTest {
      static UserDAO userDAO;
     @Before
-     static void initialize(){
+    public void initialize(){
         userDAO = new UserDAO();
     }
 
@@ -22,7 +22,7 @@ public class UserDAOTest {
         User user = new User();
         user.setFirstName("asd");
         user.setLastName("asd");
-        user.setRoleId(3);
+        user.setRole(2);
         user.setEmail("asd");
         user.setLogin("asd");
         User user1 = userDAO.insert(user);

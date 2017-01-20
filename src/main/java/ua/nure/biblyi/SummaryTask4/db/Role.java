@@ -1,19 +1,20 @@
 package ua.nure.biblyi.SummaryTask4.db;
 
-import ua.nure.biblyi.SummaryTask4.db.entity.User;
-
 /**
  * Created by dmitry on 12.01.17.
  */
 public enum Role {
     ADMIN, CLIENT, MANAGER;
 
-    public static Role getRole(User user) {
-        int roleId = user.getRoleId();
-        return Role.values()[roleId];
+    public static Role getRole(int id) {
+        return Role.values()[id];
     }
 
     public String getName() {
         return name().toLowerCase();
+    }
+
+    public int getId(){
+        return this.ordinal();
     }
 }

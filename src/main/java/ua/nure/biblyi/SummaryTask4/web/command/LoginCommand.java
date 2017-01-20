@@ -54,7 +54,7 @@ public class LoginCommand extends Command {
             throw new AppException("Cannot find user with such login/password");
         }
 
-        Role userRole = Role.getRole(user);
+        Role userRole = user.getRole();
         LOG.trace("userRole --> " + userRole);
         httpSession.setAttribute("user", user);
         httpSession.setAttribute("userRole", userRole);

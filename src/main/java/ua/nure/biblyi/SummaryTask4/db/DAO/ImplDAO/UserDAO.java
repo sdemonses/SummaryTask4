@@ -14,7 +14,7 @@ import java.sql.SQLException;
 /**
  * Created by dmitry on 14.01.17.
  */
-public class UserDAO extends AbstractJDBCDao<User, Integer> {
+public class UserDAO extends AbstractJDBCDao<User, Long> {
 
     private static final Logger LOG = Logger.getLogger(UserDAO.class);
 
@@ -54,7 +54,7 @@ public class UserDAO extends AbstractJDBCDao<User, Integer> {
             object.setPassword(rs.getString("password"));
             object.setFirstName(rs.getString("first_name"));
             object.setLastName(rs.getString("last_name"));
-            object.setRoleId(rs.getInt("role_id"));
+            object.setRole(rs.getInt("role_id"));
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_GET_INFO, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_GET_INFO, e);
@@ -73,7 +73,7 @@ public class UserDAO extends AbstractJDBCDao<User, Integer> {
             statement.setString(++k, object.getLastName());
             statement.setString(++k, object.getLogin());
             statement.setString(++k, object.getPassword());
-            statement.setInt(++k, object.getRoleId());
+            statement.setInt(++k, object.getRole().ordinal());
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO);
             throw new DAOException(ErrorMessage.ERR_CANNOT_SET_INFO, e);

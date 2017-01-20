@@ -9,7 +9,7 @@ public class City extends Entity {
 
     private String name;
 
-    private int countryId;
+    private Country country;
 
 
     public String getName() {
@@ -20,11 +20,19 @@ public class City extends Entity {
         this.name = name;
     }
 
-    public int getCountryId() {
-        return countryId;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "name='" + name + '\'' +
+                ", country=" + country +
+                '}';
     }
 }

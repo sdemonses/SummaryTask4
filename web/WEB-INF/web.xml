@@ -32,7 +32,7 @@
 
         <init-param>
             <param-name>client</param-name>
-            <param-value></param-value>
+            <param-value>profile</param-value>
         </init-param>
 
         <init-param>
@@ -42,12 +42,12 @@
 
         <init-param>
             <param-name>common</param-name>
-            <param-value>logout noCommand viewSettings</param-value>
+            <param-value>logout noCommand password</param-value>
         </init-param>
 
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login signUp index contact about language</param-value>
+            <param-value>login signUp index contact about language tour filter</param-value>
         </init-param>
     </filter>
 

@@ -19,6 +19,10 @@ public class CommandContainer {
         commands.put("logout", new LogoutCommand());
         commands.put("language", new LanguageCommand());
         commands.put("signUp", new SignUpCommand());
+        commands.put("profile", new ProfileCommand());
+        commands.put("tour", new TourCommand());
+        commands.put("password", new PasswordCommand());
+        commands.put("filter", new FilterCommand());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

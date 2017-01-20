@@ -99,3 +99,10 @@ ul.navbar-nav li.active .dropdown-menu > .active > a:focus { background: #9d426b
     color: #ccc;
     vertical-align: middle;
 }
+
+hr.border-tour{
+    border: 0;
+    border-top: 1px solid #8c8c8c;
+    border-bottom: 1px solid #fff;
+}
+.active-tour div:hover { background: #f8f8f8;  border: 0; }

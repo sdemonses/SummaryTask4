@@ -2,7 +2,7 @@ package ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO.AbstractJDBCDao;
-import ua.nure.biblyi.SummaryTask4.db.entity.City;
+import ua.nure.biblyi.SummaryTask4.db.entity.Country;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
@@ -11,66 +11,60 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by dmitry on 16.01.17.
+ * Created by Dimasyk on 19.01.2017.
  */
-public class CityDAO extends AbstractJDBCDao<City, Long> {
-
-    private static final Logger LOG = Logger.getLogger(CityDAO.class);
+public class CountryDAO extends AbstractJDBCDao<Country, Long> {
+    private final static Logger LOG = Logger.getLogger(CountryDAO.class);
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM cities";
+        return "SELECT * FROM countries";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO cities (country_id, name) \n" +
-                "VALUES (?, ?)";
+        return "INSERT INTO countries (country) \n" +
+                "VALUES (?)";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE cities \n" +
-                "SET country_id = ?, name = ?\n" +
+        return "UPDATE countries \n" +
+                "SET name = ?\n" +
                 "WHERE id = ?";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM cities WHERE id= ?";
+        return "DELETE FROM country WHERE id= ?";
     }
 
     @Override
-    protected City parseResultSet(ResultSet rs) throws DAOException {
-        LOG.trace("CityDAO.parseResultSet start");
-        City object = new City();
+    protected Country parseResultSet(ResultSet rs) throws DAOException {
+        LOG.debug("CountryDAO.parseResultSet start");
+        Country object = new Country();
         try {
             object.setId(rs.getInt("id"));
             object.setName(rs.getString("name"));
-            Long id = rs.getLong("country_id");
-            object.setCountry(new CountryDAO().getByPK(id));
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_GET_INFO, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_GET_INFO, e);
         }
-        LOG.trace("CityDAO.parseResultSet finish");
+        LOG.debug("CountryDAO.parseResultSet finish");
         return object;
-
     }
 
     @Override
-    protected int prepareStatementCommon(PreparedStatement statement, City object) throws DAOException {
-        LOG.debug("CityDAO.prepareStatementCommon start");
+    protected int prepareStatementCommon(PreparedStatement statement, Country object) throws DAOException {
+        LOG.debug("CountryDAO.prepareStatementCommon start");
         int k = 0;
         try {
             statement.setString(++k, object.getName());
-            statement.setLong(++k, object.getCountry().getId());
-       } catch (SQLException e) {
+        } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO);
             throw new DAOException(ErrorMessage.ERR_CANNOT_SET_INFO, e);
         }
-        LOG.debug("CityDAO.prepareStatementCommon finish");
+        LOG.debug("CountryDAO.prepareStatementCommon finish");
         return ++k;
     }
-
 }

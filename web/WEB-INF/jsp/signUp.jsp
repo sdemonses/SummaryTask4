@@ -32,13 +32,11 @@
     <div class="col-sm-offset-3  col-sm-6 contact-form">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="signUp"/>
-
             <div class="form-group">
                 <label for="login"><fmt:message key="form.login"/></label>
                 <input type="text" name="login" placeholder="<fmt:message key="form.enterLogin"/>" class="contact-name"
                        id="login">
             </div>
-
             <div class="form-group">
                 <label for="email"><fmt:message key="form.email"/>:</label>
                 <input type="email" name="email" placeholder="<fmt:message key="form.enterEmail"/>" class="contact-name"

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by dmitry on 14.01.17.
  */
-public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> implements GenericDao<T, PK> {
+public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> implements GenericDao<T, PK> {
 
     private static final Logger LOG = Logger.getLogger(AbstractJDBCDao.class);
 
@@ -101,7 +101,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Integer> impl
         try {
             con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, key);
+            pstmt.setLong(1, key);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 object = parseResultSet(rs);
