@@ -24,10 +24,12 @@ public class TypeFilter implements Filter<Tour> {
     public List<Tour> filter(List<Tour> list) {
         LOG.debug("TypeFilter.filter start");
         LOG.trace("Type --> " + type);
-        Iterator<Tour> it = list.iterator();
-        while (it.hasNext()) {
-            if (it.next().getType() != type) {
-                it.remove();
+        if (type != null) {
+            Iterator<Tour> it = list.iterator();
+            while (it.hasNext()) {
+                if (it.next().getType() != type) {
+                    it.remove();
+                }
             }
         }
         LOG.debug("TypeFilter.filter finish");

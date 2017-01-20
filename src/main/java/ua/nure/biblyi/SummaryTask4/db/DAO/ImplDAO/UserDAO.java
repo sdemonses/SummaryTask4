@@ -34,7 +34,7 @@ public class UserDAO extends AbstractJDBCDao<User, Long> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE users \n" +
-                "SET first_name = ?, email = ? last_name  = ?, login = ?, password = ?, role_id = ? \n" +
+                "SET first_name = ?, email = ?, last_name  = ?, login = ?, password = ?, role_id = ? \n" +
                 "WHERE id = ?";
     }
 

@@ -2,6 +2,8 @@ package ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO.AbstractJDBCDao;
+import ua.nure.biblyi.SummaryTask4.db.Status;
+import ua.nure.biblyi.SummaryTask4.db.Type;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
@@ -30,14 +32,14 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO tours (name, country_id, hotel_id, type_id, status_id, cost, person, user_id) \n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO tours (name, duration,  hotel_id, type_id, status_id, cost, person, user_id) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE tours \n" +
-                "SET name = ?, country_id = ? hotel_id  = ?, type_id = ?, status_id = ?, cost = ?, person = ?, user_id \n" +
+                "SET name = ?, hotel_id  = ?, duration = ?, type_id = ?, status_id = ?, cost = ?, person = ?, user_id = ? \n" +
                 "WHERE id = ?";
     }
 
@@ -83,6 +85,7 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         try {
             statement.setString(++k, object.getName());
             statement.setLong(++k, object.getHotel().getId());
+            statement.setLong(++k, object.getDuration());
             statement.setInt(++k, object.getType().ordinal());
             statement.setInt(++k, object.getStatus().ordinal());
             statement.setInt(++k, object.getCost());
@@ -101,8 +104,10 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
     }
 
 
-    public List<Tour> getTours() throws DAOException {
-        return getTourList(0, SQL_SELECT_TOUR_BY_STATUS);
+    public List<Tour> getTours(Status status) throws DAOException {
+        LOG.debug("TourDAO.getTours start");
+        LOG.trace("Status id-- >"+ status.ordinal());
+        return getTourList(status.ordinal(), SQL_SELECT_TOUR_BY_STATUS);
     }
 
     public List<Tour> getTourForUser(User user) throws DAOException {
@@ -111,6 +116,7 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
 
     private List<Tour> getTourList(long id, String sql) throws DAOException {
+        LOG.debug("TourDAO.getTourList start");
         List<Tour> tourList = new ArrayList<>();
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -133,6 +139,7 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
             close(pstmt);
             close(rs);
         }
+        LOG.debug("TourDAO.getTourList finish");
         return tourList;
     }
 

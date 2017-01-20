@@ -14,7 +14,13 @@ public class Path {
 
     public static final String PAGE_PROFILE = "/WEB-INF/jsp/client/profile.jsp";
 
+    public static final String PAGE_PROFILE_POST = "controller?command=profile";
+
     public static final String PAGE_TOURS = "/WEB-INF/jsp/tours.jsp";
+
+    public static final String PAGE_TOURS_POST = "";
+
+
 
 
 }

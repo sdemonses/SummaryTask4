@@ -5,6 +5,7 @@ import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.core.filters.Filter;
 import ua.nure.biblyi.SummaryTask4.core.filters.HotelFilter;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
+import ua.nure.biblyi.SummaryTask4.db.Status;
 import ua.nure.biblyi.SummaryTask4.db.Type;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
@@ -38,17 +39,27 @@ public class FilterCommand extends Command {
         LOG.debug("FilterCommand.doGet start");
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
-        Type type= Type.valueOf(httpServletRequest.getParameter("type").toUpperCase());
-        int from = Integer.parseInt(httpServletRequest.getParameter("costFrom"));
-        int to = Integer.parseInt(httpServletRequest.getParameter("costTo"));
-        int countPerson = Integer.parseInt(httpServletRequest.getParameter("countPerson"));
-        int stars = Integer.parseInt(httpServletRequest.getParameter("stars"));
+        String fromStr = httpServletRequest.getParameter("costFrom");
+        String toStr = httpServletRequest.getParameter("costTo");
+        String countPersonStr = httpServletRequest.getParameter("countPerson");
+        String starsStr = httpServletRequest.getParameter("stars");
+        String typeStr = httpServletRequest.getParameter("type").toUpperCase();
+
+        Type type = (typeStr.equals("ALL"))?null:Type.valueOf(typeStr);
+        int from, to, countPerson, stars;
+        from = (fromStr.isEmpty())?0:Integer.parseInt(fromStr);
+        to = (toStr.isEmpty())?0:Integer.parseInt(toStr);
+        countPerson = (countPersonStr.equals("all"))?0:Integer.parseInt(countPersonStr);
+        stars = (starsStr.equals("all"))?0:Integer.parseInt(starsStr);
+
+
         try {
-            tourList = tourDAO.getTours();
+            tourList = tourDAO.getTours(Status.HOT);
+            tourList.addAll(tourDAO.getTours(Status.EMPTY));
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        Filter<Tour> filter = new HotelFilter(type,from,to,countPerson,stars);
+        Filter<Tour> filter = new HotelFilter(type, from, to, countPerson, stars);
         LOG.trace(filter.filter(tourList));
         httpServletRequest.setAttribute("tours", tourList);
 

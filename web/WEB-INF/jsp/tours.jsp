@@ -50,6 +50,7 @@
             <div class="form-group">
                 <label for="countPerson"><fmt:message key="tours.filter.countPerson"/></label>
                 <select name="countPerson" id="countPerson">
+                    <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <c:forEach var="i" begin="1" end="4">
                         <option value="${i}">${i}</option>
                     </c:forEach>
@@ -58,6 +59,7 @@
             <div class="form-group">
                 <label for="stars"><fmt:message key="tours.filter.hotelStar"/></label>
                 <select name="stars" id="stars">
+                    <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <c:forEach var="i" begin="1" end="5">
                         <option value="${i}">${i}</option>
                     </c:forEach>
@@ -90,6 +92,32 @@
                         <h3><fmt:message key="cabinet.table.cost"/> : ${tour.cost}</h3>
                         <br>
                         <h4><fmt:message key="tours.filter.type"/> : ${tour.type}</h4>
+
+                        <c:if test="${sessionScope.userRole.name == 'admin'||sessionScope.userRole.name == 'manager'}">
+                            <form action="controller" method="post">
+                                <input type="hidden" value="changeStatus" name="command">
+                                <input type="hidden" value="${tour.id}" name="id">
+                                <c:if test="${tour.status.name == 'hot'}">
+                                    <input type="hidden" value="empty" name="com">
+                                    <button type="submit" class="btn-block"
+                                            ><fmt:message key="tours.doEmpty"/></button>
+                                </c:if>
+                                <c:if test="${tour.status.name == 'empty'}">
+                                    <input type="hidden" value="hot" name="com">
+                                    <button type="submit" class="btn-block"
+                                            ><fmt:message key="tours.doHot"/></button>
+                                </c:if>
+                            </form>
+                        </c:if>
+                        <c:if test="${sessionScope.userRole.name == 'client'}">
+                            <form action="controller" method="post">
+                                <input type="hidden" value="changeStatus" name="command">
+                                <input type="hidden" value="${tour.id}" name="id">
+                                <input type="hidden" value="register" name="com">
+                                <button type="submit" class="btn-block"
+                                       ><fmt:message key="tours.register"/></button>
+                            </form>
+                        </c:if>
                     </div>
                 </div>
                 <hr class="border-tour">

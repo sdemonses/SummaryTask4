@@ -32,13 +32,13 @@
             <input type="hidden" name="command" value="login"/>
             <div class="form-group">
                 <label for="contact-name">Login:</label>
-                <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name">
+                <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name" required>
             </div>
 
             <div class="form-group">
                 <label for="contact-email">Password:</label>
                 <input type="password" name="password" placeholder="Enter your password..." class="contact-email"
-                       id="contact-email">
+                       id="contact-email" required>
             </div>
 
             <button type="submit" class="btn">Sign In</button>

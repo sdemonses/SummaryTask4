@@ -94,7 +94,7 @@ public class ProfileCommand extends Command {
         }
 
         LOG.debug("ProfileCommand.doPost finish");
-        return Path.PAGE_PROFILE;
+        return Path.PAGE_PROFILE_POST;
     }
 
 }

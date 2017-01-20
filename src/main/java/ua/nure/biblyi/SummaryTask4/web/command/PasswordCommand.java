@@ -33,8 +33,8 @@ public class PasswordCommand extends Command {
     private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         LOG.debug("PasswordCommand.doPost start");
         String oldPass = httpServletRequest.getParameter("oldPassword");
-        String password = httpServletRequest.getParameter("oldPassword");
-        String repeatPassword = httpServletRequest.getParameter("oldPassword");
+        String password = httpServletRequest.getParameter("password");
+        String repeatPassword = httpServletRequest.getParameter("repeatPassword");
         if(password.length()<4){
 
         }
@@ -59,6 +59,6 @@ public class PasswordCommand extends Command {
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        return Path.PAGE_PROFILE;
+        return Path.PAGE_PROFILE_POST;
     }
 }

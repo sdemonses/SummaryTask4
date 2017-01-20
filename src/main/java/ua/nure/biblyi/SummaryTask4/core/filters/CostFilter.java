@@ -29,12 +29,14 @@ public class CostFilter extends TypeFilter {
         LOG.debug("CostFilter.filter start");
         super.filter(list);
         LOG.trace("Cost from -->" + from + " To -->" + to);
-        Iterator<Tour> it = list.iterator();
-        Tour tour;
-        while (it.hasNext()) {
-            tour = it.next();
-            if (tour.getCost() > to || tour.getCost() < from) {
-                it.remove();
+        if (to != 0) {
+            Iterator<Tour> it = list.iterator();
+            Tour tour;
+            while (it.hasNext()) {
+                tour = it.next();
+                if (tour.getCost() > to || tour.getCost() < from) {
+                    it.remove();
+                }
             }
         }
         LOG.debug("CostFilter.filter finish");

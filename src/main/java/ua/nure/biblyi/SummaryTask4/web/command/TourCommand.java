@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import sun.rmi.runtime.Log;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
+import ua.nure.biblyi.SummaryTask4.db.Status;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
@@ -41,7 +42,8 @@ public class TourCommand extends Command {
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
         try {
-            tourList  = tourDAO.getTours();
+            tourList  = tourDAO.getTours(Status.HOT);
+            tourList.addAll(tourDAO.getTours(Status.EMPTY));
         } catch (DAOException e) {
             e.printStackTrace();
         }

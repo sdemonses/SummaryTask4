@@ -23,6 +23,7 @@ public class CommandContainer {
         commands.put("tour", new TourCommand());
         commands.put("password", new PasswordCommand());
         commands.put("filter", new FilterCommand());
+        commands.put("changeStatus", new StatusCommand());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

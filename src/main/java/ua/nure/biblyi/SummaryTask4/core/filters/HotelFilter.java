@@ -23,10 +23,13 @@ public class HotelFilter extends PersonFilter {
         LOG.debug("HotelFilter.filter start");
         super.filter(list);
         LOG.trace("Count stars :" + stars);
-        Iterator<Tour> it = list.iterator();
-        while (it.hasNext()){
-            if(it.next().getHotel().getCountOfStars() != stars){
-                it.remove();
+
+        if (stars!=0) {
+            Iterator<Tour> it = list.iterator();
+            while (it.hasNext()){
+                if(it.next().getHotel().getCountOfStars() != stars){
+                    it.remove();
+                }
             }
         }
         LOG.debug("HotelFilter.filter finish");

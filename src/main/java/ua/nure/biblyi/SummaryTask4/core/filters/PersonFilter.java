@@ -24,10 +24,12 @@ public class PersonFilter extends CostFilter {
         LOG.debug("PersonFilter.filter start");
         super.filter(list);
         LOG.trace("Count person --> " + person);
-        Iterator<Tour> it = list.iterator();
-        while (it.hasNext()) {
-            if (it.next().getPerson() != person) {
-                it.remove();
+        if (person!= 0) {
+            Iterator<Tour> it = list.iterator();
+            while (it.hasNext()) {
+                if (it.next().getPerson() != person) {
+                    it.remove();
+                }
             }
         }
         LOG.debug("PersonFilter.filter finish");
