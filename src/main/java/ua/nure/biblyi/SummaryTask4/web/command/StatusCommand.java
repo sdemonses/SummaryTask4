@@ -66,6 +66,9 @@ public class StatusCommand extends Command {
                 case "paid":
                     tour.setStatus(Status.PAID.ordinal());
                     break;
+                case "register":
+                    tour.setStatus(Status.REGISTER.ordinal());
+                    break;
             }
         }
         try {
@@ -77,6 +80,14 @@ public class StatusCommand extends Command {
 
         LOG.debug("StatusCommand.doPost finish");
 
-        return "controller?command=tour";
+        String uri = httpServletRequest.getHeader("referer");
+
+        int i = uri.indexOf("controller");
+        LOG.debug("LanguageCommand.doPost finish");
+        if (i == -1) {
+            return Path.PAGE_INDEX;
+        } else {
+            return uri.substring(i);
+        }
     }
 }

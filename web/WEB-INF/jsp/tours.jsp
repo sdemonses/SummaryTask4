@@ -32,7 +32,7 @@
             <h4 align="center"><fmt:message key="tours.filter"/></h4>
             <div class="form-group">
                 <label for="type"><fmt:message key="tours.filter.type"/></label>
-                <select name="type" id="type">
+                <select name="type" id="type" class="form-control">
                     <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <option value="rest"><fmt:message key="tours.filter.rest"/></option>
                     <option value="shopping"><fmt:message key="tours.filter.shopping"/></option>
@@ -42,14 +42,14 @@
             <div class="form-group">
 
                 <label for="costFrom"><fmt:message key="tours.filter.from"/></label>
-                <input type="number" name="costFrom" id="costFrom">
+                <input class="form-control" type="number" name="costFrom" id="costFrom" min="0">
                 <p></p>
                 <label for="costTo"><fmt:message key="tours.filter.to"/></label>
-                <input type="number" name="costTo" id="costTo">
+                <input class="form-control" type="number" name="costTo" id="costTo" min="0">
             </div>
             <div class="form-group">
                 <label for="countPerson"><fmt:message key="tours.filter.countPerson"/></label>
-                <select name="countPerson" id="countPerson">
+                <select name="countPerson" id="countPerson" class="form-control">
                     <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <c:forEach var="i" begin="1" end="4">
                         <option value="${i}">${i}</option>
@@ -58,14 +58,14 @@
             </div>
             <div class="form-group">
                 <label for="stars"><fmt:message key="tours.filter.hotelStar"/></label>
-                <select name="stars" id="stars">
+                <select name="stars" id="stars" class="form-control">
                     <option value="all"><fmt:message key="tours.filter.all"/></option>
                     <c:forEach var="i" begin="1" end="5">
                         <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
             </div>
-            <input type="submit" value="<fmt:message key="tours.filter"/>">
+            <button type="submit" class="btn btn-success"><fmt:message key="tours.filter"/></button>
         </form>
     </div>
     <div class="col-sm-8">
@@ -76,6 +76,9 @@
                     <div class="col-sm-4">
                         <h2>${tour.hotel.city.name}</h2>
                         <h4>${tour.hotel.city.country.name}</h4>
+                        <c:if test="${tour.status.name == 'hot'}">
+                            <h3>!HOT!</h3>
+                        </c:if>
                     </div>
                     <div class="col-sm-4">
                         <h2>${tour.name}</h2>
@@ -100,12 +103,12 @@
                                 <c:if test="${tour.status.name == 'hot'}">
                                     <input type="hidden" value="empty" name="com">
                                     <button type="submit" class="btn-block"
-                                            ><fmt:message key="tours.doEmpty"/></button>
+                                    ><fmt:message key="tours.doEmpty"/></button>
                                 </c:if>
                                 <c:if test="${tour.status.name == 'empty'}">
                                     <input type="hidden" value="hot" name="com">
                                     <button type="submit" class="btn-block"
-                                            ><fmt:message key="tours.doHot"/></button>
+                                    ><fmt:message key="tours.doHot"/></button>
                                 </c:if>
                             </form>
                         </c:if>
@@ -115,7 +118,7 @@
                                 <input type="hidden" value="${tour.id}" name="id">
                                 <input type="hidden" value="register" name="com">
                                 <button type="submit" class="btn-block"
-                                       ><fmt:message key="tours.register"/></button>
+                                ><fmt:message key="tours.register"/></button>
                             </form>
                         </c:if>
                     </div>

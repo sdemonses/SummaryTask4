@@ -5,10 +5,10 @@
 
     <div class="container">
         <div class="navbar-header">
-<br>
+            <br>
             <a href="index.jsp"><img src="img/logo.png"></a>
-<%--
-            <a class="navbar-brand"></a>--%>
+            <%--
+                        <a class="navbar-brand"></a>--%>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="top-navbar-1">
@@ -37,10 +37,22 @@
                     </li>
                 </c:if>
                 <c:if test="${not empty sessionScope.user}">
-                    <li>
-                        <a href="controller?command=profile"><i class="fa fa-user"></i><br><fmt:message
-                                key="header.profile"/></a>
-                    </li>
+                    <c:if test="${sessionScope.userRole.name == 'admin' ||sessionScope.userRole.name == 'manager'}">
+
+                        <li>
+                            <a href="controller?command=management"><i class="fa fa-user"></i><br><fmt:message
+                                    key="header.profile"/></a>
+                        </li>
+
+                    </c:if>
+                    <c:if test="${sessionScope.userRole.name == 'client' }">
+
+                        <li>
+                            <a href="controller?command=profile"><i class="fa fa-user"></i><br><fmt:message
+                                    key="header.profile"/></a>
+                        </li>
+
+                    </c:if>
                     <li>
                         <a href="controller?command=logout"><i class="fa fa-sign-out"></i><br><fmt:message
                                 key="header.logout"/></a>
