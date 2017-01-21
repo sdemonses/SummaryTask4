@@ -29,46 +29,54 @@
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
         <form method="post" action="controller">
-            <input type="hidden" name="command" value="profile">
+            <input type="hidden" name="command" value="creator">
+            <input type="hidden" name="id" value="${requestScope.tour.id}">
             <br>
             <div class="form-group">
                 <label for="name"><fmt:message key="creator.tourName"/></label>
                 <input type="text" name="name" placeholder="<fmt:message key="creator.enterName"/>"
-                       class="form-control" id="name">
+                       class="form-control" id="name" value="${requestScope.tour.name}">
             </div>
 
             <div class="form-group">
                 <label for="duration"><fmt:message key="creator.duration"/></label>
                 <input type="number" name="duration" placeholder="<fmt:message key="creator.enterDuration"/>"
-                       class="form-control" id="duration">
+                       class="form-control" id="duration" min="0" value="${requestScope.tour.duration}">
             </div>
 
             <div class="form-group">
                 <label for="type"><fmt:message key="tours.filter.type"/></label>
                 <select id="type" name="type" class="form-control">
-                    <option value="excursion"><fmt:message key="tours.filter.excursion"/></option>
-                    <option value="rest"><fmt:message key="tours.filter.rest"/></option>
-                    <option value="shopping"><fmt:message key="tours.filter.shopping"/></option>
+                    <option value="${requestScope.tour.type.name}" selected>${requestScope.tour.type.name}</option>
+
+                    <c:forEach items="${requestScope.types}" var="type">
+                        <c:if test="${requestScope.tour.type.name != type.name}">
+                            <option value="${type.name}">${type.name}</option>
+                        </c:if>
+                    </c:forEach>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="cost"><fmt:message key="cabinet.table.cost"/></label>
                 <input type="number" name="cost" placeholder="<fmt:message key="creator.enterCost"/>"
-                       class="form-control" id="cost" min="0">
+                       class="form-control" id="cost" min="0" value="${requestScope.tour.cost}">
             </div>
 
             <div class="form-group">
                 <label for="person"><fmt:message key="cabinet.table.person"/></label>
                 <input type="number" name="person" placeholder="<fmt:message key="creator.enterPerson"/>"
-                       class="form-control" id="person" min="0">
+                       class="form-control" id="person" min="0" value="${requestScope.tour.person}">
             </div>
 
             <div class="form-group">
                 <label for="hotel"><fmt:message key="cabinet.table.hotel"/></label>
                 <select id="hotel" name="hotel" class="form-control">
+                    <option value="${requestScope.tour.hotel.id}" selected>${requestScope.tour.hotel.name}</option>
                     <c:forEach var="hotel" items="${requestScope.hotels}">
-                        <option value="${hotel.id}">${hotel.name}</option>
+                        <c:if test="${requestScope.tour.hotel.id != hotel.id}">
+                            <option value="${hotel.id}">${hotel.name}</option>
+                        </c:if>
                     </c:forEach>
                 </select>
             </div>

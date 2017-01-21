@@ -36,7 +36,7 @@ public interface GenericDao<T extends Entity, PK extends Serializable> {
     /**
      * Удаляет запись об объекте из базы данных
      */
-    void delete(T object) throws DAOException;
+    void delete(PK id) throws DAOException;
 
     /**
      * Возвращает список объектов соответствующих всем записям в базе данных

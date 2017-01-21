@@ -148,14 +148,14 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
     }
 
     @Override
-    public void delete(T object) throws DAOException {
+    public void delete(PK id) throws DAOException {
         Connection con = null;
         PreparedStatement pstmt = null;
         String sql = getDeleteQuery();
         try {
             con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(sql);
-            pstmt.setObject(1, object.getId());
+            pstmt.setObject(1, id);
             int count = pstmt.executeUpdate();
             if (count != 1) {
                 LOG.error(ErrorMessage.ERR_CANNOT_DELETE_ENTRY + ErrorMessage.COUNT_CHANGE_LINE + count);

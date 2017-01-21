@@ -18,13 +18,9 @@ public class Path {
 
     public static final String PAGE_TOURS = "/WEB-INF/jsp/tours.jsp";
 
-    public static final String PAGE_TOURS_POST = "";
+    public static final String PAGE_TOURS_POST = "controller?command=tour";
 
     public static final String PAGE_MANAGER_PROFILE ="/WEB-INF/jsp/manager/management.jsp";
 
     public static final String PAGE_CREATOR = "/WEB-INF/jsp/manager/admin/creator.jsp";
-
-    public static final String PAGE_EDITOR = "/WEB-INF/jsp/manager/admin/editor.jsp";
-
-    public static final String PAGE_MANAGER_PROFILE_POST = "controller?command=management";
 }

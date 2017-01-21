@@ -39,7 +39,7 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE tours \n" +
-                "SET name = ?, hotel_id  = ?, duration = ?, type_id = ?, status_id = ?, cost = ?, person = ?, user_id = ? \n" +
+                "SET name = ?, duration = ?, hotel_id  = ?,  type_id = ?, status_id = ?, cost = ?, person = ?, user_id = ? \n" +
                 "WHERE id = ?";
     }
 
@@ -84,8 +84,8 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         int k = 0;
         try {
             statement.setString(++k, object.getName());
-            statement.setLong(++k, object.getHotel().getId());
             statement.setLong(++k, object.getDuration());
+            statement.setLong(++k, object.getHotel().getId());
             statement.setInt(++k, object.getType().ordinal());
             statement.setInt(++k, object.getStatus().ordinal());
             statement.setInt(++k, object.getCost());

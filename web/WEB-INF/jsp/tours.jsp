@@ -102,16 +102,32 @@
                                 <input type="hidden" value="${tour.id}" name="id">
                                 <c:if test="${tour.status.name == 'hot'}">
                                     <input type="hidden" value="empty" name="com">
-                                    <button type="submit" class="btn-block"
+                                    <button type="submit" class="btn btn-group"
                                     ><fmt:message key="tours.doEmpty"/></button>
                                 </c:if>
                                 <c:if test="${tour.status.name == 'empty'}">
                                     <input type="hidden" value="hot" name="com">
-                                    <button type="submit" class="btn-block"
+                                    <button type="submit" class="btn btn-group"
                                     ><fmt:message key="tours.doHot"/></button>
                                 </c:if>
                             </form>
                         </c:if>
+
+                        <c:if test="${sessionScope.userRole.name == 'admin'}">
+                            <form action="controller" method="get">
+                                <input type="hidden" value="creator" name="command">
+                                <input type="hidden" value="${tour.id}" name="id">
+                                <button type="submit" class="btn btn-success"
+                                ><fmt:message key="tours.edit"/></button>
+                            </form>
+                            <form action="controller" method="post">
+                                <input type="hidden" value="delete" name="command">
+                                <input type="hidden" value="${tour.id}" name="id">
+                                <button type="submit" class="btn btn-danger"
+                                ><fmt:message key="tours.delete"/></button>
+                            </form>
+                        </c:if>
+
                         <c:if test="${sessionScope.userRole.name == 'client'}">
                             <form action="controller" method="post">
                                 <input type="hidden" value="changeStatus" name="command">
