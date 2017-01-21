@@ -27,14 +27,14 @@ public class UserDAO extends AbstractJDBCDao<User, Long> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO users (first_name, email, last_name, login, password, role_id) \n" +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO users (first_name, email, last_name, login, password, role_id, userStatus_id) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE users \n" +
-                "SET first_name = ?, email = ?, last_name  = ?, login = ?, password = ?, role_id = ? \n" +
+                "SET first_name = ?, email = ?, last_name  = ?, login = ?, password = ?, role_id = ?, userStatus_id = ? \n" +
                 "WHERE id = ?";
     }
 
@@ -55,6 +55,7 @@ public class UserDAO extends AbstractJDBCDao<User, Long> {
             object.setFirstName(rs.getString("first_name"));
             object.setLastName(rs.getString("last_name"));
             object.setRole(rs.getInt("role_id"));
+            object.setUserStatus(rs.getInt("userStatus_id"));
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_GET_INFO, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_GET_INFO, e);
@@ -74,6 +75,7 @@ public class UserDAO extends AbstractJDBCDao<User, Long> {
             statement.setString(++k, object.getLogin());
             statement.setString(++k, object.getPassword());
             statement.setInt(++k, object.getRole().ordinal());
+            statement.setInt(++k, object.getUserStatus().ordinal());
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO);
             throw new DAOException(ErrorMessage.ERR_CANNOT_SET_INFO, e);

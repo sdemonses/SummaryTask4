@@ -18,7 +18,9 @@ import java.util.List;
  * Created by Dimasyk on 19.01.2017.
  */
 public class TourCommand extends Command {
+
     private final static Logger LOG = Logger.getLogger(TourCommand.class);
+    private static final long serialVersionUID = 3767293547003015991L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
@@ -42,7 +44,7 @@ public class TourCommand extends Command {
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
         try {
-            tourList  = tourDAO.getTours(Status.HOT);
+            tourList = tourDAO.getTours(Status.HOT);
             tourList.addAll(tourDAO.getTours(Status.EMPTY));
         } catch (DAOException e) {
             e.printStackTrace();

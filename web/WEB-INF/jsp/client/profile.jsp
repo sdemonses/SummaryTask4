@@ -35,12 +35,14 @@
     <div class="col-sm-offset-1 col-sm-5">
         <table class="table">
             <thead>
-            <th><fmt:message key="cabinet.table.tourName"/></th>
-            <th><fmt:message key="cabinet.table.person"/></th>
-            <th><fmt:message key="cabinet.table.cost"/></th>
-            <th><fmt:message key="cabinet.table.hotel"/></th>
-            <th><fmt:message key="cabinet.table.duration"/></th>
-            <th><fmt:message key="cabinet.table.status"/></th>
+            <tr>
+                <th><fmt:message key="cabinet.table.tourName"/></th>
+                <th><fmt:message key="cabinet.table.person"/></th>
+                <th><fmt:message key="cabinet.table.cost"/></th>
+                <th><fmt:message key="cabinet.table.hotel"/></th>
+                <th><fmt:message key="cabinet.table.duration"/></th>
+                <th><fmt:message key="cabinet.table.status"/></th>
+            </tr>
             </thead>
             <tbody>
             <c:forEach items="${requestScope.tours}" var="tour">

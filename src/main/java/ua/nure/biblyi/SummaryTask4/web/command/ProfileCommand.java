@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class ProfileCommand extends Command {
     private final static Logger LOG = Logger.getLogger(ProfileCommand.class);
+    private static final long serialVersionUID = 7919187954935920165L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {

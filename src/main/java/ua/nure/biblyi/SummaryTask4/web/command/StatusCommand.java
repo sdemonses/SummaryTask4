@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class StatusCommand extends Command {
     private final static Logger LOG = Logger.getLogger(StatusCommand.class);
+    private static final long serialVersionUID = -3809760114807157712L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {

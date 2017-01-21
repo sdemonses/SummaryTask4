@@ -35,6 +35,8 @@
 
             <a href="controller?command=creator">
                 <br><fmt:message key="tour.createTour"/></a>
+            <a href="controller?command=users">
+                <br><fmt:message key="tour.userSetting"/></a>
 
 
         </c:if>

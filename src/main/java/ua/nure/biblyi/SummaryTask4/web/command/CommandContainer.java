@@ -27,6 +27,7 @@ public class CommandContainer {
         commands.put("management", new ManagerCommand());
         commands.put("creator", new CreatorCommand());
         commands.put("delete", new DeleteCommand());
+        commands.put("users", new UserCommand());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class FilterCommand extends Command {
     private final static Logger LOG = Logger.getLogger(FilterCommand.class);
+    private static final long serialVersionUID = -2278394081728372322L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {

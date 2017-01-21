@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class CreatorCommand extends Command {
     private final static Logger LOG = Logger.getLogger(CreatorCommand.class);
+    private static final long serialVersionUID = -7500041442348340185L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {

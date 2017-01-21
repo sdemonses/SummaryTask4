@@ -6,6 +6,7 @@ import ua.nure.biblyi.SummaryTask4.core.validation.EmailValidation;
 import ua.nure.biblyi.SummaryTask4.core.validation.FieldValidation;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.Role;
+import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
@@ -79,8 +80,9 @@ public class SignUpCommand extends Command {
         user.setLastName(lastName);
         user.setLogin(login);
         user.setEmail(email);
-        user.setRole(1);
+        user.setRole(Role.ADMIN.ordinal());
         user.setPassword(password);
+        user.setUserStatus(UserStatus.NOCONFIRMED.ordinal());
 
         LOG.trace("Insert in DB: user --> " + user);
         try {

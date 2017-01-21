@@ -27,7 +27,7 @@
         <filter-class>ua.nure.biblyi.SummaryTask4.web.filter.CommandAccessFilter</filter-class>
         <init-param>
             <param-name>admin</param-name>
-            <param-value>creator delete</param-value>
+            <param-value>creator delete users</param-value>
         </init-param>
 
         <init-param>

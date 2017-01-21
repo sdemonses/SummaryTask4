@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class ManagerCommand extends Command {
     private final static Logger LOG = Logger.getLogger(ManagerCommand.class);
+    private static final long serialVersionUID = -6446169660535124408L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {

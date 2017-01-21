@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PasswordCommand extends Command {
     private final static Logger LOG = Logger.getLogger(PasswordCommand.class);
+    private static final long serialVersionUID = 177616074256276634L;
+
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
         LOG.debug("PasswordCommand.execute start");
