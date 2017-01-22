@@ -23,14 +23,14 @@ public class OrderDAO extends AbstractJDBCDao<Order, Long> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO orders (user_id, tour_id, maxSale, step, status_id) \n" +
+        return "INSERT INTO orders (user_id, tour_id, maxValueSale, step, status_id) \n" +
                 "VALUES (?, ?, ?, ?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE orders \n" +
-                "SET user_id = ?, tour_id = ?, maxSale = ?,step = ?, status_id = ? \n" +
+                "SET user_id = ?, tour_id = ?, maxValueSale = ?,step = ?, status_id = ? \n" +
                 "WHERE id = ?";
     }
 
@@ -56,7 +56,7 @@ public class OrderDAO extends AbstractJDBCDao<Order, Long> {
                 object.setTour(new TourDAO().getByPK(toutId));
             }
             object.setSaleStep(rs.getInt("step"));
-            object.setSaleMax(rs.getInt("maxValue"));
+            object.setSaleMax(rs.getInt("maxValueSale"));
             object.setStatus(rs.getInt("status_id"));
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_GET_INFO, e);

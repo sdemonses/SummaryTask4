@@ -110,7 +110,6 @@ CREATE TABLE tours (
   type_id   INTEGER     NOT NULL REFERENCES type (id),
   status_id INTEGER     NOT NULL REFERENCES statuses (id),
   cost      INTEGER,
-  user_id   INTEGER,
   person    INTEGER
 );
 
@@ -122,11 +121,20 @@ INSERT INTO cities VALUES (5, 3, 'Male');
 INSERT INTO cities VALUES (6, 4, 'Casablanca');
 INSERT INTO cities VALUES (7, 5, 'Bangkok');
 
-INSERT INTO tours VALUES (DEFAULT, 'Excursion Hurghada', 6, 1, 0, 0, 250, NULL, 2);
-INSERT INTO tours VALUES (DEFAULT, 'Rest Sharm', 5, 2, 2, 0, 250, NULL, 2);
-INSERT INTO tours VALUES (DEFAULT, 'Rest Antalya', 5, 3, 2, 0, 250, NULL, 2);
-INSERT INTO tours VALUES (DEFAULT, 'Shopping Bodrum', 5, 4, 1, 0, 250, NULL, 2);
+INSERT INTO tours VALUES (DEFAULT, 'Excursion Hurghada', 6, 1, 0, 0, 250, 2);
+INSERT INTO tours VALUES (DEFAULT, 'Rest Sharm', 5, 2, 2, 0, 250, 2);
+INSERT INTO tours VALUES (DEFAULT, 'Rest Antalya', 5, 3, 2, 0, 250, 2);
+INSERT INTO tours VALUES (DEFAULT, 'Shopping Bodrum', 5, 4, 1, 0, 250, 2);
 
+
+CREATE TABLE orders (
+  id           INTEGER PRIMARY KEY AUTO_INCREMENT,
+  user_id      INTEGER NOT NULL,
+  status_id    INTEGER NOT NULL,
+  tour_id      INTEGER NOT NULL,
+  maxValueSale INTEGER,
+  step         INTEGER
+);
 
 
 
