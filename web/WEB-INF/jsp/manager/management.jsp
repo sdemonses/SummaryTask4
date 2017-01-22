@@ -101,6 +101,7 @@
     <div class="col-sm-1"></div>
 
 </div>
+<%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
 
 </body>

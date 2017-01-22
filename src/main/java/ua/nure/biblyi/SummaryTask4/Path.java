@@ -26,4 +26,9 @@ public class Path {
 
     public static final String PAGE_USERS = "/WEB-INF/jsp/manager/admin/users.jsp";
     public static final String PAGE_USERS_POST = "controller?command=users";
+
+    public static final String PAGE_REDIRECT = "/WEB-INF/jsp/redirect.jsp";
+
+    public static final String PAGE_REDIRECT_POST = "controller?command=banned";
+
 }

@@ -133,7 +133,7 @@
                                 <input type="hidden" value="changeStatus" name="command">
                                 <input type="hidden" value="${tour.id}" name="id">
                                 <input type="hidden" value="register" name="com">
-                                <button type="submit" class="btn-block"
+                                <button type="submit" class=" btn btn-success"
                                 ><fmt:message key="tours.register"/></button>
                             </form>
                         </c:if>
@@ -146,6 +146,7 @@
     </div>
     <div class="col-sm-1"></div>
 </div>
+<%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
 </body>
 </html>

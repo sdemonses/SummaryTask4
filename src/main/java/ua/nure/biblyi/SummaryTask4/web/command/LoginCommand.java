@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.Role;
+import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
@@ -52,6 +53,10 @@ public class LoginCommand extends Command {
 
         if (user == null || !password.equals(user.getPassword())) {
             throw new AppException("Cannot find user with such login/password");
+        }
+
+        if (user.getUserStatus() == UserStatus.BAN){
+            return Path.PAGE_REDIRECT_POST;
         }
 
         Role userRole = user.getRole();

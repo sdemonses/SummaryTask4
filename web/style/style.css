@@ -106,3 +106,9 @@ hr.border-tour{
     border-bottom: 1px solid #fff;
 }
 .active-tour div:hover { background: #f8f8f8;  border: 0; }
+
+
+.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-labeled {padding-top: 0;padding-bottom: 0;}
+.input-group { margin-bottom:10px; }
+.separator { border-right: 1px solid #dfdfe0; }

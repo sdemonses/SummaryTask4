@@ -30,23 +30,28 @@
     <div class="col-sm-offset-3  col-sm-6 contact-form">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
-            <div class="form-group">
-                <label for="contact-name">Login:</label>
-                <input type="text" name="login" placeholder="Enter your login..." class="contact-name" id="contact-name" required>
+            <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                <input type="text" name="login" placeholder="Enter your login..." class="form-control" id="contact-name"
+                       required>
             </div>
 
-            <div class="form-group">
-                <label for="contact-email">Password:</label>
-                <input type="password" name="password" placeholder="Enter your password..." class="contact-email"
+            <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                <input type="password" name="password" placeholder="Enter your password..." class="form-control"
                        id="contact-email" required>
             </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <button type="submit" class="btn btn-labeled btn-success"> <fmt:message key="header.signIn"/>
+                </button>
 
-            <button type="submit" class="btn">Sign In</button>
+            </div>
         </form>
 
     </div>
 </div>
 
+<%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
 </body>
 </html>
