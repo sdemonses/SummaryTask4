@@ -12,13 +12,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by dmitry on 14.01.17.
+ * Implementation DAO for Tour entity.
+ *
+ * @author D.Biblyi
+ *
  */
 public class UserDAO extends AbstractJDBCDao<User, Long> {
 
     private static final Logger LOG = Logger.getLogger(UserDAO.class);
 
-    public static final String SQL_SELECT_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String SQL_SELECT_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
 
     @Override
     public String getSelectQuery() {
@@ -83,6 +86,12 @@ public class UserDAO extends AbstractJDBCDao<User, Long> {
         LOG.debug("UserDAO.prepareStatementCommon finish");
         return ++k;
     }
+
+    /**
+     *  Return record from database corresponding login
+     * @param login finded user with
+     * @return object  corresponding to login or null
+     */
 
     public User getByLogin(String login) throws DAOException {
         User object = null;

@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by dmitry on 16.01.17.
+ * Implementation DAO for City entity.
+ *
+ * @author D.Biblyi
+ *
  */
 public class CityDAO extends AbstractJDBCDao<City, Long> {
 

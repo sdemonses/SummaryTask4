@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Dimasyk on 19.01.2017.
+ * Tour command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class TourCommand extends Command {
 
@@ -36,7 +39,18 @@ public class TourCommand extends Command {
     }
 
     private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        return null;
+        LOG.debug("TourCommand.doPost start");
+        Long id = Long.parseLong(httpServletRequest.getParameter("id"));
+        TourDAO tourDAO = new TourDAO();
+        Tour tour;
+        try {
+            tour = tourDAO.getByPK(id);
+        } catch (DAOException e) {
+            throw new IllegalArgumentException();
+        }
+
+        LOG.debug("TourCommand.doPost finish");
+        return Path.PAGE_TOURS_POST;
     }
 
     private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {

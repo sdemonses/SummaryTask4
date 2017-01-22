@@ -19,27 +19,31 @@ import java.util.List;
 public interface GenericDao<T extends Entity, PK extends Serializable> {
 
     /**
-     * Создает новую запись, соответствующую объекту object
+     * Create new record in database  corresponding to the object
+     * @param object The object to be inserted
      */
     T insert(T object) throws DAOException;
 
     /**
-     * Возвращает объект соответствующий записи с первичным ключом key или null
+     * Return object from database  corresponding personal key
+     * @param key Personal key object
      */
     T getByPK(PK key) throws DAOException;
 
     /**
-     * Сохраняет состояние объекта group в базе данных
+     * Update information record in database  corresponding to the object
+     * @param object the object to be updated
      */
     void update(T object) throws DAOException;
 
     /**
-     * Удаляет запись об объекте из базы данных
+     * Delete record from database
+     * @param id Personal key object
      */
     void delete(PK id) throws DAOException;
 
     /**
-     * Возвращает список объектов соответствующих всем записям в базе данных
+     * Return all record from database
      */
     List<T> getAll() throws DAOException;
 }

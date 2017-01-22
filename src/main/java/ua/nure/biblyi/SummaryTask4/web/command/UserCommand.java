@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by dmitry on 21.01.17.
+ * Ban/ unBan user command
+ *
+ * @author D.Biblyi
+ *
  */
 public class UserCommand extends Command {
 

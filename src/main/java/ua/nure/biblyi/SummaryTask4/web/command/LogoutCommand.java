@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by dmitry on 17.01.17.
+ * Logout command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class LogoutCommand extends Command {
     private static final Logger LOG = Logger.getLogger(LogoutCommand.class);

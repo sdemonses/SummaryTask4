@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <i class="fa fa-envelope"></i>
-                <h1>Sign Up/</h1>
-                <p>Register new account </p>
+                <h1><fmt:message key="header.signUp"/>/</h1>
+                <p><fmt:message key="register"/></p>
             </div>
         </div>
     </div>
@@ -32,6 +32,13 @@
     <div class="col-sm-offset-3  col-sm-6 contact-form">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="signUp"/>
+
+            <c:if test="${not empty requestScope.errorMessage}">
+                <div class="alert alert-danger">
+                    <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
+                </div>
+            </c:if>
+
             <div class="form-group">
 
                 <label for="login"><fmt:message key="form.login"/></label>

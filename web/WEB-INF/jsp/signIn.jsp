@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <i class="fa fa-envelope"></i>
-                <h1>Sign In/</h1>
-                <p>Enter to you account </p>
+                <h1><fmt:message key="header.signIn"/>/</h1>
+                <p><fmt:message key="signIn.entered"/></p>
             </div>
         </div>
     </div>
@@ -30,15 +30,22 @@
     <div class="col-sm-offset-3  col-sm-6 contact-form">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
+
+            <c:if test="${not empty requestScope.errorMessage}">
+                <div class="alert alert-danger">
+                    <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
+                </div>
+            </c:if>
+
             <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                <input type="text" name="login" placeholder="Enter your login..." class="form-control" id="contact-name"
+                <input type="text" name="login" placeholder="<fmt:message key="form.enterLogin"/>" class="form-control" id="contact-name"
                        required>
             </div>
 
             <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                <input type="password" name="password" placeholder="Enter your password..." class="form-control"
+                <input type="password" name="password" placeholder="<fmt:message key="form.enterPassword"/>" class="form-control"
                        id="contact-email" required>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">

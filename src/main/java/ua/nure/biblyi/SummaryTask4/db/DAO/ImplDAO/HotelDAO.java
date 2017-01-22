@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by Dimasyk on 19.01.2017.
+ * Implementation DAO for Hotel entity.
+ *
+ * @author D.Biblyi
+ *
  */
 public class HotelDAO extends AbstractJDBCDao<Hotel, Long> {
 

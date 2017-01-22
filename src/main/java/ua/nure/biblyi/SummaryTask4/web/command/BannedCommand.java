@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by dmitry on 21.01.17.
+ * Command for banned user
+ *
+ * @author D.Biblyi
+ *
  */
 public class BannedCommand extends Command {
 

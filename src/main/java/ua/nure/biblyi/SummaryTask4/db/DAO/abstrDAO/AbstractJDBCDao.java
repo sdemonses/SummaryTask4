@@ -18,40 +18,40 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
     private static final Logger LOG = Logger.getLogger(AbstractJDBCDao.class);
 
     /**
-     * Возвращает sql запрос для получения всех записей.
+     * Return sql query for get all record.
      * <p/>
      * SELECT * FROM [Table]
      */
     public abstract String getSelectQuery();
 
     /**
-     * Возвращает sql запрос для вставки новой записи в базу данных.
+     * Return sql query for insert new record in dataBase.
      * <p/>
      * INSERT INTO [Table] ([column, column, ...]) VALUES (?, ?, ...);
      */
     public abstract String getCreateQuery();
 
     /**
-     * Возвращает sql запрос для обновления записи.
+     * Return sql query for update record.
      * <p/>
      * UPDATE [Table] SET [column = ?, column = ?, ...] WHERE id = ?;
      */
     public abstract String getUpdateQuery();
 
     /**
-     * Возвращает sql запрос для удаления записи из базы данных.
+     * Return sql query for delete record in database.
      * <p/>
      * DELETE FROM [Table] WHERE id= ?;
      */
     public abstract String getDeleteQuery();
 
     /**
-     * Разбирает ResultSet и возвращает список объектов соответствующих содержимому ResultSet.
+     * Parse ResultSet and return object.
      */
     protected abstract T parseResultSet(ResultSet rs) throws DAOException;
 
     /**
-     * Устанавливает аргументы insert запроса в соответствии со значением полей объекта object.
+     * Sets information for insert and update query  from object.
      */
     protected abstract int prepareStatementCommon(PreparedStatement statement, T object) throws DAOException;
 

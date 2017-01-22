@@ -24,8 +24,6 @@ public class Tour extends Entity {
 
     private Status status;
 
-    private User user;
-
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
@@ -82,14 +80,6 @@ public class Tour extends Entity {
         this.type = Type.getType(typeId);
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "Tour{" +
@@ -100,7 +90,6 @@ public class Tour extends Entity {
                 ", hotel=" + hotel +
                 ", type=" + type +
                 ", status=" + status +
-                ", user=" + user +
                 '}';
     }
 }

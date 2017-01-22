@@ -20,10 +20,6 @@
                     <a href="controller?command=tour"><i class="fa fa-globe"></i><br><fmt:message key="tours"/></a>
                 </li>
                 <li>
-                    <a href="services.html"><i class="fa fa-tasks"></i><br>Services</a>
-                </li>
-
-                <li>
                     <a href="about.html"><i class="fa fa-user"></i><br><fmt:message key="header.about"/></a>
                 </li>
                 <c:if test="${empty sessionScope.user}">

@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dimasyk on 22.01.2017.
+ * Manage sale for order
+ *
+ * @author D.Biblyi
  */
 public class SaleCommand extends Command {
     private final static Logger LOG = Logger.getLogger(SaleCommand.class);
+    private static final long serialVersionUID = -5212600582754715171L;
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
@@ -50,7 +53,7 @@ public class SaleCommand extends Command {
         LOG.debug("SaleCommand.doPost start");
         int maxValue = Integer.parseInt(httpServletRequest.getParameter("maxValue"));
         int step = Integer.parseInt(httpServletRequest.getParameter("step"));
-        Long id  = Long.parseLong(httpServletRequest.getParameter("id"));
+        Long id = Long.parseLong(httpServletRequest.getParameter("id"));
 
         TourDAO tourDAO = new TourDAO();
         Tour tour = null;
@@ -59,8 +62,6 @@ public class SaleCommand extends Command {
         } catch (DAOException e) {
             e.printStackTrace();
         }
-
-
 
 
         LOG.debug("SaleCommand.doPost finish");

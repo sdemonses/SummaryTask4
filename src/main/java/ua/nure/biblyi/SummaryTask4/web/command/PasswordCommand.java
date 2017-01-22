@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dimasyk on 19.01.2017.
+ * Change password command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class PasswordCommand extends Command {
     private final static Logger LOG = Logger.getLogger(PasswordCommand.class);

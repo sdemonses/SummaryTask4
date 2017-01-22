@@ -3,6 +3,7 @@ package ua.nure.biblyi.SummaryTask4.web;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
+import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.web.command.Command;
 import ua.nure.biblyi.SummaryTask4.web.command.CommandContainer;
 
@@ -46,8 +47,9 @@ public class Controller extends HttpServlet {
         String forward = Path.PAGE_ERROR_PAGE;
         try {
             forward = command.execute(request, response, type);
-        } catch (AppException ex) {
+        }catch (AppException ex) {
             request.setAttribute("errorMessage", ex.getMessage());
+
         }
         LOG.trace("Forward address --> " + forward);
 

@@ -19,7 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Dimasyk on 19.01.2017.
+ * Change profile settings command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class ProfileCommand extends Command {
     private final static Logger LOG = Logger.getLogger(ProfileCommand.class);

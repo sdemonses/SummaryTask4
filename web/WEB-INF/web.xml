@@ -37,12 +37,12 @@
 
         <init-param>
             <param-name>manager</param-name>
-            <param-value>management sale</param-value>
+            <param-value>management sale changeStatus</param-value>
         </init-param>
 
         <init-param>
             <param-name>common</param-name>
-            <param-value>logout noCommand password changeStatus</param-value>
+            <param-value>logout noCommand password</param-value>
         </init-param>
 
         <init-param>

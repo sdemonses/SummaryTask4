@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by Dimasyk on 19.01.2017.
+ * Implementation DAO for Country entity.
+ *
+ * @author D.Biblyi
+ *
  */
 public class CountryDAO extends AbstractJDBCDao<Country, Long> {
     private final static Logger LOG = Logger.getLogger(CountryDAO.class);

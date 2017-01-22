@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Dimasyk on 21.01.2017.
+ * create / edit tour command
+ *
+ * @author D.Biblyi
+ *
  */
 public class CreatorCommand extends Command {
     private final static Logger LOG = Logger.getLogger(CreatorCommand.class);

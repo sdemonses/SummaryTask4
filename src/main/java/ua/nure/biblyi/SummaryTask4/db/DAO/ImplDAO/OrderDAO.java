@@ -12,7 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by Dimasyk on 22.01.2017.
+ * Implementation DAO for Order entity.
+ *
+ * @author D.Biblyi
+ *
  */
 public class OrderDAO extends AbstractJDBCDao<Order, Long> {
     private final static Logger LOG = Logger.getLogger(OrderDAO.class);

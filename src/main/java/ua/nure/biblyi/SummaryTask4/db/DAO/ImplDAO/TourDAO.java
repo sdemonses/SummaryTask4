@@ -16,7 +16,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Implementation DAO for Tour entity.
+ *
+ * @author D.Biblyi
+ *
+ */
 public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
     private static final String SQL_SELECT_FOR_USER = "SELECT * FROM tours WHERE user_id = ?";
@@ -32,14 +37,14 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO tours (name, duration,  hotel_id, type_id, status_id, cost, person, user_id) \n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+        return "INSERT INTO tours (name, duration,  hotel_id, type_id, status_id, cost, person) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE tours \n" +
-                "SET name = ?, duration = ?, hotel_id  = ?,  type_id = ?, status_id = ?, cost = ?, person = ?, user_id = ? \n" +
+                "SET name = ?, duration = ?, hotel_id  = ?,  type_id = ?, status_id = ?, cost = ?, person = ?\n" +
                 "WHERE id = ?";
     }
 
@@ -58,12 +63,6 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
             Long hotelId = rs.getLong("hotel_id");
             object.setHotel(new HotelDAO().getByPK(hotelId));
-
-            Long userId = rs.getLong("user_id");
-            if(userId!=0){
-                object.setUser(new UserDAO().getByPK(userId));
-            }
-
 
             object.setDuration(rs.getInt("duration"));
             object.setName(rs.getString("name"));
@@ -90,11 +89,6 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
             statement.setInt(++k, object.getStatus().ordinal());
             statement.setInt(++k, object.getCost());
             statement.setInt(++k, object.getPerson());
-            if (object.getUser() == null) {
-                statement.setObject(++k, null);
-            } else {
-                statement.setLong(++k, object.getUser().getId());
-            }
         } catch (SQLException e) {
             LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO);
             throw new DAOException(ErrorMessage.ERR_CANNOT_SET_INFO, e);
@@ -103,7 +97,10 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         return ++k;
     }
 
-
+    /**
+     * Return all record from database with specified status
+     * @return list of tour
+     */
     public List<Tour> getTours(Status status) throws DAOException {
         LOG.debug("TourDAO.getTours start");
         LOG.trace("Status id-- >"+ status.ordinal());
@@ -114,7 +111,13 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         return getTourList(user.getId(), SQL_SELECT_FOR_USER);
     }
 
-
+    /**
+     * Return list of tour
+     * @param id insert id in Prepared Statement
+     * @param sql sql query
+     * @return list of founded tour
+     * @throws DAOException
+     */
     private List<Tour> getTourList(long id, String sql) throws DAOException {
         LOG.debug("TourDAO.getTourList start");
         List<Tour> tourList = new ArrayList<>();

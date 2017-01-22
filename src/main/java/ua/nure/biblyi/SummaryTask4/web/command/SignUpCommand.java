@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by dmitry on 17.01.17.
+ * Registration command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class SignUpCommand extends Command {
     private static final long serialVersionUID = 789638107905236244L;

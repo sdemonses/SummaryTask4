@@ -8,11 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
 /**
- * Created by dmitry on 16.01.17.
+ * Main interface for the Command pattern implementation.
+ *
+ * @author D.Biblyi
+ *
  */
 public abstract class Command implements Serializable{
     private static final long serialVersionUID = 5724744267098426897L;
 
+
+    /**
+     * Define method type and execution method for command.
+     *
+     * @return Address to go once the command is executed.
+     */
     public abstract String execute(HttpServletRequest httpServletRequest,
                                    HttpServletResponse httpServletResponse,
                                    TypeHttpRequest type) throws AppException;

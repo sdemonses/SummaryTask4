@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dimasyk on 20.01.2017.
+ * Change status command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class StatusCommand extends Command {
     private final static Logger LOG = Logger.getLogger(StatusCommand.class);
@@ -48,13 +51,7 @@ public class StatusCommand extends Command {
         } catch (DAOException e) {
             throw new IllegalArgumentException();
         }
-        Role role = (Role) httpServletRequest.getSession().getAttribute("userRole");
-        LOG.trace("User role --> " + role);
-        if (role == Role.CLIENT && command.equals("register")) {
-            tour.setStatus(Status.REGISTER.ordinal());
-            tour.setUser((User) httpServletRequest.getSession().getAttribute("user"));
-        } else if(role == Role.ADMIN||role == Role.MANAGER){
-            switch (command) {
+        switch (command) {
                 case "empty":
                     tour.setStatus(Status.EMPTY.ordinal());
                     break;
@@ -71,7 +68,7 @@ public class StatusCommand extends Command {
                     tour.setStatus(Status.REGISTER.ordinal());
                     break;
             }
-        }
+
         try {
             tourDAO.update(tour);
         } catch (DAOException e) {

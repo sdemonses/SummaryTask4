@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Dimasyk on 21.01.2017.
+ * Manage tours command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class ManagerCommand extends Command {
     private final static Logger LOG = Logger.getLogger(ManagerCommand.class);
@@ -29,7 +32,7 @@ public class ManagerCommand extends Command {
         } else {
             result = doGet(httpServletRequest, httpServletResponse);
         }
-        LOG.debug("ManagerCommand.execute finish");;
+        LOG.debug("ManagerCommand.execute finish");
         return result;
     }
 

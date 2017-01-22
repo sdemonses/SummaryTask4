@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by dmitry on 16.01.17.
+ * Holder for all commands.<br/>
+ *
+ * @author D.Biblyi
+ *
  */
 public class CommandContainer {
     private static final Logger LOG = Logger.getLogger(CommandContainer.class);

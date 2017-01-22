@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by dmitry on 16.01.17.
+ * Login command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class LoginCommand extends Command {
 
@@ -28,7 +31,7 @@ public class LoginCommand extends Command {
 
         String result = null;
         if (TypeHttpRequest.POST == type) {
-            result = doPost(httpServletRequest, httpServletResponse);
+            result = doPost(httpServletRequest, httpServletResponse, type);
         } else {
             result = Path.PAGE_SIGN_IN;
         }
@@ -36,7 +39,7 @@ public class LoginCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
         LOG.debug("LoginCommand.doPost start");
         HttpSession httpSession = httpServletRequest.getSession();
         UserDAO userDAO = new UserDAO();
@@ -45,14 +48,18 @@ public class LoginCommand extends Command {
         LOG.trace("Request parameter: loging --> " + login);
         String password = httpServletRequest.getParameter("password");
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            throw new AppException("Login/password cannot be empty");
+            httpServletRequest.setAttribute("errorMessage" , "Login/password cannot be empty");
+            type = TypeHttpRequest.GET;
+            return Path.PAGE_SIGN_IN;
         }
 
         User user = userDAO.getByLogin(login);
         LOG.trace("Found in DB: user --> " + user);
 
         if (user == null || !password.equals(user.getPassword())) {
-            throw new AppException("Cannot find user with such login/password");
+            httpServletRequest.setAttribute("errorMessage" , "Cannot find user with such login/password");
+            type = TypeHttpRequest.GET;
+            return Path.PAGE_SIGN_IN;
         }
 
         if (user.getUserStatus() == UserStatus.BAN){

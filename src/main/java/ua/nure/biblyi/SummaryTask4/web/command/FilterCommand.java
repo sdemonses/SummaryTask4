@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Dimasyk on 20.01.2017.
+ * Filtration tour command
+ *
+ * @author D.Biblyi
+ *
  */
 public class FilterCommand extends Command {
     private final static Logger LOG = Logger.getLogger(FilterCommand.class);

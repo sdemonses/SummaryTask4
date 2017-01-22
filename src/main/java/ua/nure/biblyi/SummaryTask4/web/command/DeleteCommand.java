@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Dimasyk on 21.01.2017.
+ * Delete tour Command
+ *
+ * @author D.Biblyi
+ *
  */
 public class DeleteCommand extends Command {
     private final static Logger LOG = Logger.getLogger(DeleteCommand.class);

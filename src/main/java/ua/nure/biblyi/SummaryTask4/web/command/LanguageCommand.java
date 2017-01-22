@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by dmitry on 18.01.17.
+ * Change language command.
+ *
+ * @author D.Biblyi
+ *
  */
 public class LanguageCommand extends Command {
     private static final Logger LOG = Logger.getLogger(LanguageCommand.class);
