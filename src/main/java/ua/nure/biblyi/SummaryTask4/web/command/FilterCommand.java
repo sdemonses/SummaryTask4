@@ -39,7 +39,7 @@ public class FilterCommand extends Command {
         return result;
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("FilterCommand.doGet start");
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
@@ -57,12 +57,9 @@ public class FilterCommand extends Command {
         stars = (starsStr.equals("all"))?0:Integer.parseInt(starsStr);
 
 
-        try {
-            tourList = tourDAO.getTours(Status.HOT);
+        tourList = tourDAO.getTours(Status.HOT);
             tourList.addAll(tourDAO.getTours(Status.EMPTY));
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
         Filter<Tour> filter = new HotelFilter(type, from, to, countPerson, stars);
         LOG.trace(filter.filter(tourList));
         httpServletRequest.setAttribute("tours", tourList);

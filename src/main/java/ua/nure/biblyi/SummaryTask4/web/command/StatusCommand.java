@@ -1,15 +1,13 @@
 package ua.nure.biblyi.SummaryTask4.web.command;
 
 import org.apache.log4j.Logger;
-import sun.rmi.runtime.Log;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
-import ua.nure.biblyi.SummaryTask4.db.Role;
 import ua.nure.biblyi.SummaryTask4.db.Status;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
-import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,18 +37,16 @@ public class StatusCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException, DuplicateException {
         LOG.debug("StatusCommand.doPost start");
         String command = httpServletRequest.getParameter("com");
         LOG.trace("Command -->" + command);
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
         TourDAO tourDAO = new TourDAO();
         Tour tour;
-        try {
-            tour = tourDAO.getByPK(id);
-        } catch (DAOException e) {
-            throw new IllegalArgumentException();
-        }
+
+        tour = tourDAO.getByPK(id);
+
         switch (command) {
                 case "empty":
                     tour.setStatus(Status.EMPTY.ordinal());
@@ -69,13 +65,7 @@ public class StatusCommand extends Command {
                     break;
             }
 
-        try {
-            tourDAO.update(tour);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-
-
+        tourDAO.update(tour);
         LOG.debug("StatusCommand.doPost finish");
 
         String uri = httpServletRequest.getHeader("referer");

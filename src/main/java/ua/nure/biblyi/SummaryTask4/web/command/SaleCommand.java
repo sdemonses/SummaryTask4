@@ -34,22 +34,20 @@ public class SaleCommand extends Command {
         return result;
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("SaleCommand.doGet start");
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
         TourDAO tourDAO = new TourDAO();
         Tour tour = null;
-        try {
-            tour = tourDAO.getByPK(id);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
+        tour = tourDAO.getByPK(id);
+
         httpServletRequest.setAttribute("tour", tour);
         LOG.debug("SaleCommand.doGet finish");
         return Path.PAGE_SALE;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("SaleCommand.doPost start");
         int maxValue = Integer.parseInt(httpServletRequest.getParameter("maxValue"));
         int step = Integer.parseInt(httpServletRequest.getParameter("step"));
@@ -57,13 +55,7 @@ public class SaleCommand extends Command {
 
         TourDAO tourDAO = new TourDAO();
         Tour tour = null;
-        try {
-            tour = tourDAO.getByPK(id);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-
-
+        tour = tourDAO.getByPK(id);
         LOG.debug("SaleCommand.doPost finish");
         return "";
     }

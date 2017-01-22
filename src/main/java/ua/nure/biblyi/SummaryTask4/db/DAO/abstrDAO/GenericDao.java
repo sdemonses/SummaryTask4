@@ -6,6 +6,7 @@ package ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO;
 
 import ua.nure.biblyi.SummaryTask4.db.entity.Entity;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface GenericDao<T extends Entity, PK extends Serializable> {
      * Create new record in database  corresponding to the object
      * @param object The object to be inserted
      */
-    T insert(T object) throws DAOException;
+    T insert(T object) throws DAOException, DuplicateException;
 
     /**
      * Return object from database  corresponding personal key
@@ -34,7 +35,7 @@ public interface GenericDao<T extends Entity, PK extends Serializable> {
      * Update information record in database  corresponding to the object
      * @param object the object to be updated
      */
-    void update(T object) throws DAOException;
+    void update(T object) throws DAOException, DuplicateException;
 
     /**
      * Delete record from database

@@ -6,6 +6,8 @@ import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
+import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,23 +37,29 @@ public class PasswordCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("PasswordCommand.doPost start");
         String oldPass = httpServletRequest.getParameter("oldPassword");
         String password = httpServletRequest.getParameter("password");
         String repeatPassword = httpServletRequest.getParameter("repeatPassword");
         if(password.length()<4){
-
+            LOG.error(ErrorMessage.ERR_SMALL_LOGIN);
+            httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+            throw new AppException(ErrorMessage.ERR_SMALL_LOGIN);
         }
 
         if(!password.equals(repeatPassword)){
-
+            LOG.error(ErrorMessage.ERR_DIFFERENT_PASSWORD);
+            httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+            throw new AppException(ErrorMessage.ERR_DIFFERENT_PASSWORD);
         }
         UserDAO userDAO = new UserDAO();
         User user = (User) httpServletRequest.getSession().getAttribute("user");
         try {
             if(!userDAO.getByPK((Long)user.getId()).getPassword().equals(oldPass)){
-
+                LOG.error(ErrorMessage.ERR_WRONG_PASSWORD);
+                httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+                throw new AppException(ErrorMessage.ERR_WRONG_PASSWORD);
             }
         } catch (DAOException e) {
             e.printStackTrace();
@@ -59,11 +67,9 @@ public class PasswordCommand extends Command {
         user.setPassword(password);
         LOG.debug("PasswordCommand.doPost finish");
 
-        try {
+
             userDAO.update(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
         return Path.PAGE_PROFILE_POST;
     }
 }

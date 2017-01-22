@@ -10,6 +10,7 @@ import ua.nure.biblyi.SummaryTask4.db.entity.Hotel;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,18 +41,15 @@ public class CreatorCommand extends Command {
 
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("CreatorCommand.doGet start");
         HotelDAO hotelDAO = new HotelDAO();
         String id = httpServletRequest.getParameter("id");
 
         LOG.trace("Tour id --> " + id);
         List<Hotel> hotelList = null;
-        try {
             hotelList = hotelDAO.getAll();
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
         if (id != null) {
             TourDAO tourDAO = new TourDAO();
             Long idL = Long.parseLong(id);
@@ -67,7 +65,7 @@ public class CreatorCommand extends Command {
         return Path.PAGE_CREATOR;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DuplicateException, DAOException {
         LOG.debug("CreatorCommand.doPost start");
         String id = httpServletRequest.getParameter("id");
 
@@ -105,16 +103,14 @@ public class CreatorCommand extends Command {
         tour.setType(Type.valueOf(typeStr.toUpperCase()).ordinal());
         LOG.trace("Tour which inserted" + tour);
         TourDAO tourDAO = new TourDAO();
-        try {
-            if (id.isEmpty()) {
+
+        if (id.isEmpty()) {
                 tourDAO.insert(tour);
             } else {
                 tour.setId(Long.parseLong(id));
                 tourDAO.update(tour);
             }
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
 
         LOG.debug("CreatorCommand.doPost finish");
         String uri = httpServletRequest.getHeader("referer");

@@ -34,16 +34,12 @@ public class DeleteCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("DeleteCommand.doPost start");
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
         TourDAO tourDAO = new TourDAO();
 
-        try {
             tourDAO.delete(id);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
 
         LOG.debug("DeleteCommand.doPost finish");
         return Path.PAGE_TOURS_POST;

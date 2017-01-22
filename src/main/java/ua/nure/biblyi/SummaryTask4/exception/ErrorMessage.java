@@ -45,9 +45,12 @@ public class ErrorMessage {
 
     public static final String ERR_EMAIL_INVALID = "Email is not valid.";
 
-    public static final String ERR_LOGIN_INVALID  = "Login is not valid.";
+    public static final String ERR_FIELD_INVALID = "Field is not valid.";
 
     public static final String ERR_SMALL_LOGIN = "Username must be longer than 4 characters";
+
+    public static final String ERR_WRONG_PASSWORD = "Wrong password";
+
 
 
 }

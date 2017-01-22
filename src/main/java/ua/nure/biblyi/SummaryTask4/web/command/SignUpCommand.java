@@ -9,7 +9,8 @@ import ua.nure.biblyi.SummaryTask4.db.Role;
 import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
-import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
+import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 import ua.nure.biblyi.SummaryTask4.exception.ValidationException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
@@ -42,7 +43,7 @@ public class SignUpCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("SignUpCommand.doPost start");
         String result;
         HttpSession httpSession = httpServletRequest.getSession();
@@ -61,7 +62,9 @@ public class SignUpCommand extends Command {
             fieldValidation.validate(firstName);
             fieldValidation.validate(lastName);
         } catch (ValidationException validationException) {
-            validationException.printStackTrace();
+            LOG.error(ErrorMessage.ERR_FIELD_INVALID);
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
+            throw new AppException(validationException);
         }
 
         String email = httpServletRequest.getParameter("email");
@@ -70,11 +73,15 @@ public class SignUpCommand extends Command {
         try {
             emailValidation.validate(email);
         } catch (ValidationException validationException) {
-            validationException.printStackTrace();
+            LOG.error(ErrorMessage.ERR_EMAIL_INVALID);
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
+            throw new AppException(validationException);
         }
 
         if(!password.equals(repeatPassword)){
-
+            LOG.error(ErrorMessage.ERR_DIFFERENT_PASSWORD);
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
+            throw new AppException(ErrorMessage.ERR_DIFFERENT_PASSWORD);
         }
         UserDAO userDAO = new UserDAO();
 
@@ -90,8 +97,9 @@ public class SignUpCommand extends Command {
         LOG.trace("Insert in DB: user --> " + user);
         try {
             user = userDAO.insert(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
+        } catch (DuplicateException e) {
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
+            throw new AppException(ErrorMessage.ERR_LOGIN_NOT_FREE);
         }
 
         httpSession.setAttribute("user", user);

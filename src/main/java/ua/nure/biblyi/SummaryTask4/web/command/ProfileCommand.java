@@ -8,10 +8,7 @@ import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
-import ua.nure.biblyi.SummaryTask4.exception.AppException;
-import ua.nure.biblyi.SummaryTask4.exception.DAOException;
-import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
-import ua.nure.biblyi.SummaryTask4.exception.ValidationException;
+import ua.nure.biblyi.SummaryTask4.exception.*;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,21 +41,18 @@ public class ProfileCommand extends Command {
         return result;
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         User user = (User) httpServletRequest.getSession().getAttribute("user");
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
-        try {
-            tourList = tourDAO.getTourForUser(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
+        tourList = tourDAO.getTourForUser(user);
         httpServletRequest.setAttribute("tours", tourList);
 
         return Path.PAGE_PROFILE;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("ProfileCommand.doPost start");
         String path = Path.PAGE_ERROR_PAGE;
         String firstName = httpServletRequest.getParameter("firstName");
@@ -70,7 +64,8 @@ public class ProfileCommand extends Command {
             emailValidation.validate(email);
         } catch (ValidationException validationException) {
             LOG.error(ErrorMessage.ERR_EMAIL_INVALID);
-
+            httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+            throw new AppException(validationException);
         }
 
         FieldValidation fieldValidation = new FieldValidation();
@@ -80,7 +75,9 @@ public class ProfileCommand extends Command {
             fieldValidation.validate(login);
             fieldValidation.validate(firstName);
         } catch (ValidationException e) {
-            //
+            LOG.error(ErrorMessage.ERR_FIELD_INVALID);
+            httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+            throw new AppException(e);
         }
 
         UserDAO userDAO = new UserDAO();
@@ -90,13 +87,13 @@ public class ProfileCommand extends Command {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setLogin(login);
-
         try {
             userDAO.update(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        } catch (DuplicateException e) {
 
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
+            throw new AppException(ErrorMessage.ERR_LOGIN_NOT_FREE);
+        }
         LOG.debug("ProfileCommand.doPost finish");
         return Path.PAGE_PROFILE_POST;
     }

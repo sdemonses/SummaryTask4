@@ -7,6 +7,7 @@ import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,25 +56,16 @@ public class UserCommand extends Command {
         return Path.PAGE_USERS;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DuplicateException, DAOException {
         LOG.debug("UserCommand.doPost start");
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
         UserDAO userDAO = new UserDAO();
         UserStatus userStatus = UserStatus.valueOf(httpServletRequest.getParameter("com").toUpperCase());
         LOG.trace("User id --> " + id + "New userStatus --> " + userStatus);
-        User user = null;
-        try {
-            user = userDAO.getByPK(id);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        User user = userDAO.getByPK(id);
         LOG.trace("Updated user" + user);
         user.setUserStatus(userStatus.ordinal());
-        try {
-            userDAO.update(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        userDAO.update(user);
         LOG.debug("UserCommand.doPost finish");
         return Path.PAGE_USERS_POST;
     }

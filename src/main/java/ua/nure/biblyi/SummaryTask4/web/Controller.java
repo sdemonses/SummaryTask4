@@ -47,9 +47,13 @@ public class Controller extends HttpServlet {
         String forward = Path.PAGE_ERROR_PAGE;
         try {
             forward = command.execute(request, response, type);
-        }catch (AppException ex) {
+        } catch (DAOException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            type = TypeHttpRequest.GET;
+        } catch (AppException ex) {
             request.setAttribute("errorMessage", ex.getMessage());
-
+            forward = (String) request.getAttribute("path");
+            type = TypeHttpRequest.GET;
         }
         LOG.trace("Forward address --> " + forward);
 

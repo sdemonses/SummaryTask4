@@ -37,8 +37,8 @@ public class FieldValidation implements Validation {
         Matcher matcher = pattern.matcher(expr);
 
         if (!matcher.matches()) {
-            LOG.debug(ErrorMessage.ERR_LOGIN_INVALID + expr);
-            throw new ValidationException(ErrorMessage.ERR_LOGIN_INVALID + expr);
+            LOG.debug(ErrorMessage.ERR_FIELD_INVALID + expr);
+            throw new ValidationException(ErrorMessage.ERR_FIELD_INVALID + expr);
         }
         return true;
     }

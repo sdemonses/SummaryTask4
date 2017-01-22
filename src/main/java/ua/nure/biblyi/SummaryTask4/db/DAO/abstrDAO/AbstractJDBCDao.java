@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.DBManager;
 import ua.nure.biblyi.SummaryTask4.db.entity.Entity;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
 import java.sql.*;
@@ -57,7 +58,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
 
 
     @Override
-    public T insert(T object) throws DAOException {
+    public T insert(T object) throws DAOException, DuplicateException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -80,6 +81,10 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
             con.commit();
         } catch (SQLException e) {
             rollback(con);
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                LOG.error("Entry with such parameter was created");
+                throw new DuplicateException();
+            }
             LOG.error(ErrorMessage.ERR_CANNOT_INSERT_ENTRY, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_INSERT_ENTRY, e);
         } finally {
@@ -122,7 +127,7 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
     }
 
     @Override
-    public void update(T object) throws DAOException {
+    public void update(T object) throws DAOException, DuplicateException {
         String sql = getUpdateQuery();
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -139,6 +144,10 @@ public abstract class AbstractJDBCDao<T extends Entity, PK extends Long> impleme
             con.commit();
         } catch (SQLException e) {
             rollback(con);
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                LOG.error("Entry with such parameter was created");
+                throw new DuplicateException();
+            }
             LOG.error(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_UPDATE_ENTRY, e);
         } finally {

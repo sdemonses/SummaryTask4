@@ -31,7 +31,7 @@ public class LoginCommand extends Command {
 
         String result = null;
         if (TypeHttpRequest.POST == type) {
-            result = doPost(httpServletRequest, httpServletResponse, type);
+            result = doPost(httpServletRequest, httpServletResponse);
         } else {
             result = Path.PAGE_SIGN_IN;
         }
@@ -39,7 +39,7 @@ public class LoginCommand extends Command {
         return result;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("LoginCommand.doPost start");
         HttpSession httpSession = httpServletRequest.getSession();
         UserDAO userDAO = new UserDAO();
@@ -48,18 +48,16 @@ public class LoginCommand extends Command {
         LOG.trace("Request parameter: loging --> " + login);
         String password = httpServletRequest.getParameter("password");
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            httpServletRequest.setAttribute("errorMessage" , "Login/password cannot be empty");
-            type = TypeHttpRequest.GET;
-            return Path.PAGE_SIGN_IN;
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_IN);
+            throw new AppException("Cannot find user with such login/password");
         }
 
         User user = userDAO.getByLogin(login);
         LOG.trace("Found in DB: user --> " + user);
 
         if (user == null || !password.equals(user.getPassword())) {
-            httpServletRequest.setAttribute("errorMessage" , "Cannot find user with such login/password");
-            type = TypeHttpRequest.GET;
-            return Path.PAGE_SIGN_IN;
+            httpServletRequest.setAttribute("path", Path.PAGE_SIGN_IN);
+            throw new AppException("Wrong password or login");
         }
 
         if (user.getUserStatus() == UserStatus.BAN){

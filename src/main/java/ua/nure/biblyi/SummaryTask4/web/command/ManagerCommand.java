@@ -36,18 +36,15 @@ public class ManagerCommand extends Command {
         return result;
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("ManagerCommand.doGet start");
 
         List<Tour> tours = null;
         TourDAO tourDAO = new TourDAO();
-        try {
-            tours = tourDAO.getTours(Status.REGISTER);
+
+        tours = tourDAO.getTours(Status.REGISTER);
             tours.addAll(tourDAO.getTours(Status.PAID));
             tours.addAll(tourDAO.getTours(Status.CANCELED));
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
 
         httpServletRequest.setAttribute("tours", tours);
         LOG.debug("ManagerCommand.doGet finish");
