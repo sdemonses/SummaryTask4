@@ -1,4 +1,4 @@
-package ua.nure.biblyi.SummaryTask4.web.command;
+package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
@@ -13,6 +13,8 @@ import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 import ua.nure.biblyi.SummaryTask4.exception.ValidationException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
+import ua.nure.biblyi.SummaryTask4.web.command.Command;
+import ua.nure.biblyi.SummaryTask4.web.command.CommandContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,7 +66,7 @@ public class SignUpCommand extends Command {
         } catch (ValidationException validationException) {
             LOG.error(ErrorMessage.ERR_FIELD_INVALID);
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
-            throw new AppException(validationException);
+            throw new AppException(validationException.getMessage());
         }
 
         String email = httpServletRequest.getParameter("email");
@@ -75,7 +77,7 @@ public class SignUpCommand extends Command {
         } catch (ValidationException validationException) {
             LOG.error(ErrorMessage.ERR_EMAIL_INVALID);
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
-            throw new AppException(validationException);
+            throw new AppException(validationException.getMessage());
         }
 
         if(!password.equals(repeatPassword)){

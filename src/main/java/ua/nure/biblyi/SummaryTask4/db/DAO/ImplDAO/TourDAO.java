@@ -3,9 +3,7 @@ package ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO.AbstractJDBCDao;
 import ua.nure.biblyi.SummaryTask4.db.Status;
-import ua.nure.biblyi.SummaryTask4.db.Type;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
-import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
@@ -20,11 +18,9 @@ import java.util.List;
  * Implementation DAO for Tour entity.
  *
  * @author D.Biblyi
- *
  */
 public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
-    private static final String SQL_SELECT_FOR_USER = "SELECT * FROM tours WHERE user_id = ?";
 
     private static final String SQL_SELECT_TOUR_BY_STATUS = "SELECT * FROM tours WHERE status_id = ?";
 
@@ -77,6 +73,8 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         return object;
     }
 
+
+
     @Override
     protected int prepareStatementCommon(PreparedStatement statement, Tour object) throws DAOException {
         LOG.debug("TourDAO.prepareStatementCommon start");
@@ -99,26 +97,11 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
 
     /**
      * Return all record from database with specified status
+     *
      * @return list of tour
      */
+
     public List<Tour> getTours(Status status) throws DAOException {
-        LOG.debug("TourDAO.getTours start");
-        LOG.trace("Status id-- >"+ status.ordinal());
-        return getTourList(status.ordinal(), SQL_SELECT_TOUR_BY_STATUS);
-    }
-
-    public List<Tour> getTourForUser(User user) throws DAOException {
-        return getTourList(user.getId(), SQL_SELECT_FOR_USER);
-    }
-
-    /**
-     * Return list of tour
-     * @param id insert id in Prepared Statement
-     * @param sql sql query
-     * @return list of founded tour
-     * @throws DAOException
-     */
-    private List<Tour> getTourList(long id, String sql) throws DAOException {
         LOG.debug("TourDAO.getTourList start");
         List<Tour> tourList = new ArrayList<>();
         Connection con = null;
@@ -126,8 +109,8 @@ public class TourDAO extends AbstractJDBCDao<Tour, Long> {
         ResultSet rs = null;
         try {
             con = DBManager.getInstance().getConnection();
-            pstmt = con.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt = con.prepareStatement(SQL_SELECT_TOUR_BY_STATUS);
+            pstmt.setInt(1, status.ordinal());
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 tourList.add(parseResultSet(rs));

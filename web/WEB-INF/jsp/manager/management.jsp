@@ -55,38 +55,41 @@
             <th><fmt:message key="cabinet.table.changeStatus"/></th>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.tours}" var="tour">
+            <c:forEach items="${requestScope.orders}" var="order">
                 <tr>
-                    <td>${tour.name}</td>
-                    <td>${tour.cost}</td>
-                    <td>${tour.hotel.name}</td>
-                    <td>${tour.status}</td>
+                    <td>${order.tour.name}</td>
+                    <td>${order.tour.cost}</td>
+                    <td>${order.tour.hotel.name}</td>
+                    <td>${order.status}</td>
 
-                    <c:if test="${tour.status.name == 'register'}">
+                    <c:if test="${order.status.name == 'register'}">
                         <td>
                             <form action="controller" method="post">
                                 <input type="hidden" value="changeStatus" name="command">
-                                <input type="hidden" value="${tour.id}" name="id">
+                                <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="paid" name="com">
+                                <input type="hidden" value="order" name="type">
                                 <button type="submit" class="btn-block"
                                 ><fmt:message key="management.paid"/></button>
                             </form>
 
                             <form action="controller" method="post">
                                 <input type="hidden" value="changeStatus" name="command">
-                                <input type="hidden" value="${tour.id}" name="id">
+                                <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="canceled" name="com">
+                                <input type="hidden" value="order" name="type">
                                 <button type="submit" class="btn-block"
                                 ><fmt:message key="management.canceled"/></button>
                             </form>
                         </td>
                     </c:if>
-                    <c:if test="${tour.status.name != 'register'}">
+                    <c:if test="${order.status.name != 'register'}">
                         <td>
                             <form action="controller" method="post">
                                 <input type="hidden" value="changeStatus" name="command">
-                                <input type="hidden" value="${tour.id}" name="id">
+                                <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="register" name="com">
+                                <input type="hidden" value="order" name="type">
                                 <button type="submit" class="btn-block"
                                 ><fmt:message key="tours.register"/></button>
                             </form>

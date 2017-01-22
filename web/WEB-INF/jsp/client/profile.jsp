@@ -28,6 +28,12 @@
 
 <div class="row">
     <div class="col-sm-offset-1 col-sm-4 contact-form">
+        <c:if test="${not empty requestScope.errorMessage}">
+            <div class="alert alert-danger">
+                <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
+            </div>
+        </c:if>
+
         <%@include file="/WEB-INF/jspf/account.jspf"%>
     </div>
 
@@ -45,14 +51,14 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.tours}" var="tour">
+            <c:forEach items="${requestScope.orders}" var="order">
                 <tr>
-                    <td>${tour.name}</td>
-                    <td>${tour.person}</td>
-                    <td>${tour.cost}</td>
-                    <td>${tour.hotel.name}</td>
-                    <td>${tour.duration}</td>
-                    <td>${tour.status}</td>
+                    <td>${order.tour.name}</td>
+                    <td>${order.tour.person}</td>
+                    <td>${order.tour.cost}</td>
+                    <td>${order.tour.hotel.name}</td>
+                    <td>${order.tour.duration}</td>
+                    <td>${order.status}</td>
                 </tr>
             </c:forEach>
             </tbody>

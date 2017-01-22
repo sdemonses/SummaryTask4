@@ -39,7 +39,7 @@ public class FilterCommand extends Command {
         return result;
     }
 
-    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
+    private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("FilterCommand.doGet start");
         TourDAO tourDAO = new TourDAO();
         List<Tour> tourList = null;
@@ -51,10 +51,16 @@ public class FilterCommand extends Command {
 
         Type type = (typeStr.equals("ALL"))?null:Type.valueOf(typeStr);
         int from, to, countPerson, stars;
-        from = (fromStr.isEmpty())?0:Integer.parseInt(fromStr);
-        to = (toStr.isEmpty())?0:Integer.parseInt(toStr);
-        countPerson = (countPersonStr.equals("all"))?0:Integer.parseInt(countPersonStr);
-        stars = (starsStr.equals("all"))?0:Integer.parseInt(starsStr);
+        try {
+            from = (fromStr.isEmpty())?0:Integer.parseInt(fromStr);
+            to = (toStr.isEmpty())?0:Integer.parseInt(toStr);
+            countPerson = (countPersonStr.equals("all"))?0:Integer.parseInt(countPersonStr);
+            stars = (starsStr.equals("all"))?0:Integer.parseInt(starsStr);
+        } catch (NumberFormatException e) {
+            LOG.error("Invalid data", e);
+            httpServletRequest.setAttribute("path", Path.PAGE_TOURS);
+            throw new AppException(e.getMessage());
+        }
 
 
         tourList = tourDAO.getTours(Status.HOT);

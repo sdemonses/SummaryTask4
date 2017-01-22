@@ -1,4 +1,4 @@
-package ua.nure.biblyi.SummaryTask4.web.command;
+package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
@@ -8,6 +8,7 @@ import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
+import ua.nure.biblyi.SummaryTask4.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,7 @@ public class LoginCommand extends Command {
         String password = httpServletRequest.getParameter("password");
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_IN);
-            throw new AppException("Cannot find user with such login/password");
+            throw new AppException("Password or login cannot be empty");
         }
 
         User user = userDAO.getByLogin(login);

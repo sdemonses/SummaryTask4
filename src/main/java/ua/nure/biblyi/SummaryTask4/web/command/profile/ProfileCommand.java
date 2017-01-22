@@ -1,15 +1,18 @@
-package ua.nure.biblyi.SummaryTask4.web.command;
+package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.core.validation.EmailValidation;
 import ua.nure.biblyi.SummaryTask4.core.validation.FieldValidation;
+import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.OrderDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
+import ua.nure.biblyi.SummaryTask4.db.entity.Order;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.*;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
+import ua.nure.biblyi.SummaryTask4.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +46,11 @@ public class ProfileCommand extends Command {
 
     private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         User user = (User) httpServletRequest.getSession().getAttribute("user");
-        TourDAO tourDAO = new TourDAO();
-        List<Tour> tourList = null;
+        OrderDAO orderDAO = new OrderDAO();
+        List<Order> orderList = null;
 
-        tourList = tourDAO.getTourForUser(user);
-        httpServletRequest.setAttribute("tours", tourList);
+        orderList = orderDAO.getOrderList(user.getId());
+        httpServletRequest.setAttribute("orders", orderList);
 
         return Path.PAGE_PROFILE;
     }

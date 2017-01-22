@@ -1,13 +1,17 @@
-package ua.nure.biblyi.SummaryTask4.web.command;
+package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
+import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.OrderDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.Status;
+import ua.nure.biblyi.SummaryTask4.db.entity.Order;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
+import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
+import ua.nure.biblyi.SummaryTask4.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +32,7 @@ public class ManagerCommand extends Command {
         LOG.debug("ManagerCommand.execute start");;
         String result = null;
         if (TypeHttpRequest.POST == type) {
-            result = "";
+            result = Path.PAGE_ERROR_PAGE;
         } else {
             result = doGet(httpServletRequest, httpServletResponse);
         }
@@ -39,14 +43,9 @@ public class ManagerCommand extends Command {
     private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         LOG.debug("ManagerCommand.doGet start");
 
-        List<Tour> tours = null;
-        TourDAO tourDAO = new TourDAO();
-
-        tours = tourDAO.getTours(Status.REGISTER);
-            tours.addAll(tourDAO.getTours(Status.PAID));
-            tours.addAll(tourDAO.getTours(Status.CANCELED));
-
-        httpServletRequest.setAttribute("tours", tours);
+        OrderDAO orderDAO = new OrderDAO();
+        List<Order> orderList = orderDAO.getAll();
+        httpServletRequest.setAttribute("orders", orderList);
         LOG.debug("ManagerCommand.doGet finish");
 
         return Path.PAGE_MANAGER_PROFILE;

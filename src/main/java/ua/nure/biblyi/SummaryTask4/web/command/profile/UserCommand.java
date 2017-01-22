@@ -1,4 +1,4 @@
-package ua.nure.biblyi.SummaryTask4.web.command;
+package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
@@ -9,6 +9,7 @@ import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.DuplicateException;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
+import ua.nure.biblyi.SummaryTask4.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

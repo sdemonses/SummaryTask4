@@ -1,6 +1,7 @@
 package ua.nure.biblyi.SummaryTask4.web.command;
 
 import org.apache.log4j.Logger;
+import ua.nure.biblyi.SummaryTask4.web.command.profile.*;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,6 +33,7 @@ public class CommandContainer {
         commands.put("delete", new DeleteCommand());
         commands.put("users", new UserCommand());
         commands.put("banned", new BannedCommand());
+        commands.put("order", new OrderCommand());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

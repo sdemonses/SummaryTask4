@@ -13,6 +13,7 @@ DROP TABLE tours;
 DROP TABLE type;
 DROP TABLE users;
 DROP TABLE userStatus;
+DROP TABLE orders;
 
 CREATE TABLE roles (
   id   INTEGER PRIMARY KEY,

@@ -7,9 +7,12 @@ import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation DAO for Order entity.
@@ -19,6 +22,10 @@ import java.sql.SQLException;
  */
 public class OrderDAO extends AbstractJDBCDao<Order, Long> {
     private final static Logger LOG = Logger.getLogger(OrderDAO.class);
+
+    private static final String SQL_SELECT_FOR_USER = "SELECT * FROM orders WHERE user_id = ?";
+
+
     @Override
     public String getSelectQuery() {
         return "SELECT * FROM orders";
@@ -27,7 +34,7 @@ public class OrderDAO extends AbstractJDBCDao<Order, Long> {
     @Override
     public String getCreateQuery() {
         return "INSERT INTO orders (user_id, tour_id, maxValueSale, step, status_id) \n" +
-                "VALUES (?, ?, ?, ?)";
+                "VALUES (?,?, ?, ?, ?)";
     }
 
     @Override
@@ -80,10 +87,44 @@ public class OrderDAO extends AbstractJDBCDao<Order, Long> {
             statement.setInt(++k, object.getSaleStep());
             statement.setInt(++k, object.getStatus().ordinal());
         } catch (SQLException e) {
-            LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO);
+            LOG.error(ErrorMessage.ERR_CANNOT_SET_INFO, e);
             throw new DAOException(ErrorMessage.ERR_CANNOT_SET_INFO, e);
         }
         LOG.debug("OrderDAO.prepareStatementCommon finish");
         return ++k;
+    }
+
+
+    /**
+     * Return list of order for user
+     * @param id users
+     * @return list of founded order
+     */
+    public List<Order> getOrderList(Long id) throws DAOException {
+        LOG.debug("OrderDAO.getTourList start");;
+        List<Order> orderList = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = DBManager.getInstance().getConnection();
+            pstmt = con.prepareStatement(SQL_SELECT_FOR_USER);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                orderList.add(parseResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            LOG.error(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+            throw new DAOException(ErrorMessage.ERR_CANNOT_OBTAIN_ENTRY, e);
+        } finally {
+            close(con);
+            close(pstmt);
+            close(rs);
+        }
+        LOG.debug("OrderDAO.getTourList finish");
+        return orderList;
     }
 }

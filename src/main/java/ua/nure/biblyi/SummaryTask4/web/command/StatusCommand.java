@@ -2,8 +2,11 @@ package ua.nure.biblyi.SummaryTask4.web.command;
 
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
+import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.OrderDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.Status;
+import ua.nure.biblyi.SummaryTask4.db.entity.Entity;
+import ua.nure.biblyi.SummaryTask4.db.entity.Order;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
@@ -40,32 +43,40 @@ public class StatusCommand extends Command {
     private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException, DuplicateException {
         LOG.debug("StatusCommand.doPost start");
         String command = httpServletRequest.getParameter("com");
+        String type = httpServletRequest.getParameter("type");
         LOG.trace("Command -->" + command);
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
-        TourDAO tourDAO = new TourDAO();
-        Tour tour;
 
-        tour = tourDAO.getByPK(id);
-
-        switch (command) {
+        if (type.equals("tour")){
+            Tour tour;
+            TourDAO tourDAO = new TourDAO();
+            tour = tourDAO.getByPK(id);
+            switch (command) {
                 case "empty":
                     tour.setStatus(Status.EMPTY.ordinal());
                     break;
                 case "hot":
                     tour.setStatus(Status.HOT.ordinal());
-                    break;
+            }
+            tourDAO.update(tour);
+
+        }else{
+            Order order;
+            OrderDAO orderDAO = new OrderDAO();
+            order = orderDAO.getByPK(id);
+            switch (command) {
                 case "canceled":
-                    tour.setStatus(Status.CANCELED.ordinal());
+                    order.setStatus(Status.CANCELED.ordinal());
                     break;
                 case "paid":
-                    tour.setStatus(Status.PAID.ordinal());
+                    order.setStatus(Status.PAID.ordinal());
                     break;
                 case "register":
-                    tour.setStatus(Status.REGISTER.ordinal());
+                    order.setStatus(Status.REGISTER.ordinal());
                     break;
             }
-
-        tourDAO.update(tour);
+            orderDAO.update(order);
+        }
         LOG.debug("StatusCommand.doPost finish");
 
         String uri = httpServletRequest.getHeader("referer");
@@ -78,4 +89,5 @@ public class StatusCommand extends Command {
             return uri.substring(i);
         }
     }
+
 }
