@@ -111,6 +111,12 @@
                                     ><fmt:message key="tours.doHot"/></button>
                                 </c:if>
                             </form>
+                            <form action="controller" method="get">
+                                <input type="hidden" value="sale" name="command">
+                                <input type="hidden" value="${tour.id}" name="id">
+                                <button type="submit" class="btn btn-success"
+                                ><fmt:message key="tours.edit"/></button>
+                            </form>
                         </c:if>
 
                         <c:if test="${sessionScope.userRole.name == 'admin'}">

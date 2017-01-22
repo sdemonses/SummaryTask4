@@ -31,4 +31,7 @@ public class Path {
 
     public static final String PAGE_REDIRECT_POST = "controller?command=banned";
 
+    public static final String PAGE_SALE = "/WEB-INF/jsp/manager/sale.jsp";
+
+
 }

@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <i class="fa fa-envelope"></i>
-                <h1><fmt:message key="managment"/>/</h1>
-                <p><fmt:message key="managment.info"/></p>
+                <h1><fmt:message key="management"/>/</h1>
+                <p><fmt:message key="management.info"/></p>
             </div>
         </div>
     </div>
@@ -30,6 +30,9 @@
 <div class="row">
     <div class="col-sm-offset-1 col-sm-4 contact-form">
         <%@include file="/WEB-INF/jspf/account.jspf" %>
+
+
+
         <c:if test="${sessionScope.userRole.name == 'admin'}">
 
 
@@ -66,7 +69,7 @@
                                 <input type="hidden" value="${tour.id}" name="id">
                                 <input type="hidden" value="paid" name="com">
                                 <button type="submit" class="btn-block"
-                                ><fmt:message key="managment.paid"/></button>
+                                ><fmt:message key="management.paid"/></button>
                             </form>
 
                             <form action="controller" method="post">
@@ -74,7 +77,7 @@
                                 <input type="hidden" value="${tour.id}" name="id">
                                 <input type="hidden" value="canceled" name="com">
                                 <button type="submit" class="btn-block"
-                                ><fmt:message key="managment.canceled"/></button>
+                                ><fmt:message key="management.canceled"/></button>
                             </form>
                         </td>
                     </c:if>
@@ -101,6 +104,9 @@
     <div class="col-sm-1"></div>
 
 </div>
+
+
+
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
 

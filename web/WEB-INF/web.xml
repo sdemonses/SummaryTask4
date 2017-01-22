@@ -37,7 +37,7 @@
 
         <init-param>
             <param-name>manager</param-name>
-            <param-value>management</param-value>
+            <param-value>management sale</param-value>
         </init-param>
 
         <init-param>
