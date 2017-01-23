@@ -29,11 +29,7 @@
 
 <div class="row">
     <div class="col-sm-offset-1 col-sm-4 contact-form">
-        <c:if test="${not empty requestScope.errorMessage}">
-            <div class="alert alert-danger">
-                <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-            </div>
-        </c:if>
+        <mt:error errorMessage="${requestScope.errorMessage}"/>
 
         <%@include file="/WEB-INF/jspf/account.jspf" %>
 
@@ -101,6 +97,14 @@
                             </form>
                         </td>
                     </c:if>
+                    <td>
+                        <form action="controller" method="get">
+                            <input type="hidden" value="sale" name="command">
+                            <input type="hidden" value="${order.id}" name="id">
+                            <button type="submit" class="btn btn-default"
+                            ><fmt:message key="tours.sale"/></button>
+                        </form>
+                    </td>
 
 
                 </tr>

@@ -25,23 +25,24 @@
         </div>
     </div>
 </div>
-
+<mt:error errorMessage="${requestScope.errorMessage}"/>
 
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="sale"/>
+            <input type="hidden" name="id" value="${requestScope.order.id}"/>
 
             <div class="form-group">
                 <label for="maxValue"><fmt:message key="tour.sale.maxValue"/></label>
-                <input type="number" min="1" name="maxValue" placeholder="<fmt:message key="tour.sale.enterMaxValue"/>"
+                <input type="number" min="1" name="maxValue" value="${requestScope.order.saleMax}" placeholder="<fmt:message key="tour.sale.enterMaxValue"/>"
                        class="form-control" id="maxValue"
                        required>
             </div>
 
             <div class="form-group">
                 <label for="step"><fmt:message key="tour.sale.step"/></label>
-                <input type="number" name="step" placeholder="<fmt:message key="tour.sale.enterStep"/>"
+                <input type="number" name="step" value="${requestScope.order.saleStep}" placeholder="<fmt:message key="tour.sale.enterStep"/>"
                        class="form-control"
                        id="step" required>
             </div>

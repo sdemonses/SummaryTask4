@@ -14,14 +14,11 @@ import java.util.Properties;
  * Created by dmitry on 23.01.17.
  */
 public class Sender {
-
-    private String username;
-    private String password;
+    private String username = "epamtour@gmail.com";
+    private String password = "awdrgyjil";
     private Properties props;
 
-    public Sender(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Sender() {
 
         props = new Properties();
         props.put("mail.smtp.auth", "true");

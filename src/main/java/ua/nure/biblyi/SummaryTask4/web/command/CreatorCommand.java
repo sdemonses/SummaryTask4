@@ -21,7 +21,6 @@ import java.util.List;
  * create / edit tour command
  *
  * @author D.Biblyi
- *
  */
 public class CreatorCommand extends Command {
     private final static Logger LOG = Logger.getLogger(CreatorCommand.class);
@@ -48,16 +47,13 @@ public class CreatorCommand extends Command {
 
         LOG.trace("Tour id --> " + id);
         List<Hotel> hotelList = null;
-            hotelList = hotelDAO.getAll();
+        hotelList = hotelDAO.getAll();
 
         if (id != null) {
             TourDAO tourDAO = new TourDAO();
             Long idL = Long.parseLong(id);
-            try {
-                httpServletRequest.setAttribute("tour", tourDAO.getByPK(idL));
-            } catch (DAOException e) {
-                e.printStackTrace();
-            }
+            httpServletRequest.setAttribute("tour", tourDAO.getByPK(idL));
+
         }
         httpServletRequest.setAttribute("hotels", hotelList);
         httpServletRequest.setAttribute("types", Type.values());
@@ -65,7 +61,7 @@ public class CreatorCommand extends Command {
         return Path.PAGE_CREATOR;
     }
 
-    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DuplicateException, DAOException {
+    private String doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AppException {
         LOG.debug("CreatorCommand.doPost start");
         String id = httpServletRequest.getParameter("id");
 
@@ -81,18 +77,20 @@ public class CreatorCommand extends Command {
 
         int duration, cost, person;
         Long hotelId;
-
-        duration = Integer.parseInt(durationStr);
-        cost = Integer.parseInt(costStr);
-        person = Integer.parseInt(personStr);
-        hotelId = Long.parseLong(hotelStr);
+        try {
+            duration = Integer.parseInt(durationStr);
+            cost = Integer.parseInt(costStr);
+            person = Integer.parseInt(personStr);
+            hotelId = Long.parseLong(hotelStr);
+        } catch (NumberFormatException e) {
+            LOG.error("Invalid data", e);
+            httpServletRequest.setAttribute("path", Path.PAGE_CREATOR);
+            throw new AppException(e.getMessage());
+        }
         HotelDAO hotelDAO = new HotelDAO();
         Hotel hotel = null;
-        try {
-            hotel = hotelDAO.getByPK(hotelId);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
+        hotel = hotelDAO.getByPK(hotelId);
         Tour tour = new Tour();
         tour.setStatus(Status.EMPTY.ordinal());
         tour.setCost(cost);
@@ -105,22 +103,14 @@ public class CreatorCommand extends Command {
         TourDAO tourDAO = new TourDAO();
 
         if (id.isEmpty()) {
-                tourDAO.insert(tour);
-            } else {
-                tour.setId(Long.parseLong(id));
-                tourDAO.update(tour);
-            }
+            tourDAO.insert(tour);
+        } else {
+            tour.setId(Long.parseLong(id));
+            tourDAO.update(tour);
+        }
 
 
         LOG.debug("CreatorCommand.doPost finish");
-        String uri = httpServletRequest.getHeader("referer");
-
-        int i = uri.indexOf("controller");
-        LOG.debug("LanguageCommand.doPost finish");
-        if (i == -1) {
-            return Path.PAGE_INDEX;
-        } else {
-            return uri.substring(i);
-        }
+        return Path.PAGE_TOURS_POST;
     }
 }

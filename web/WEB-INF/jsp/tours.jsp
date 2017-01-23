@@ -30,12 +30,7 @@
         <form action="controller" method="get">
             <input type="hidden" value="filter" name="command">
 
-            <c:if test="${not empty requestScope.errorMessage}">
-                <div class="alert alert-danger">
-                    <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-                </div>
-            </c:if>
-
+            <mt:error errorMessage="${requestScope.errorMessage}"/>
 
 
             <h4 align="center"><fmt:message key="tours.filter"/></h4>

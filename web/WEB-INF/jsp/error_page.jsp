@@ -35,10 +35,7 @@
 					<h3>${message}</h3>
 				</c:if>
 				
-				<c:if test="${not empty exception}">
-					<% exception.printStackTrace(new PrintWriter(System.out)); %>
-				</c:if>
-				
+
 				<%-- if we get this page using forward --%>
 				<c:if test="${not empty requestScope.errorMessage}">
 					<h3>${requestScope.errorMessage}</h3>

@@ -28,11 +28,7 @@
 
 <c:if test="${not empty sessionScope.userStatus && sessionScope.user.userStatus.name !='ban'}">
 
-    <c:if test="${not empty requestScope.errorMessage}">
-        <div class="alert alert-danger">
-            <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-        </div>
-    </c:if>
+    <mt:error errorMessage="${requestScope.errorMessage}"/>
 
     <form method="POST" action="controller">
         <div class="row">

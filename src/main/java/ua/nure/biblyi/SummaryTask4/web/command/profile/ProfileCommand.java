@@ -7,6 +7,7 @@ import ua.nure.biblyi.SummaryTask4.core.validation.FieldValidation;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.OrderDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
+import ua.nure.biblyi.SummaryTask4.db.Role;
 import ua.nure.biblyi.SummaryTask4.db.entity.Order;
 import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
@@ -46,10 +47,11 @@ public class ProfileCommand extends Command {
 
     private String doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws DAOException {
         User user = (User) httpServletRequest.getSession().getAttribute("user");
+        if(user.getRole()!= Role.CLIENT){
+            return Path.PAGE_INDEX;
+        }
         OrderDAO orderDAO = new OrderDAO();
-        List<Order> orderList = null;
-
-        orderList = orderDAO.getOrderList(user.getId());
+        List<Order> orderList = orderDAO.getOrderList(user.getId());
         httpServletRequest.setAttribute("orders", orderList);
 
         return Path.PAGE_PROFILE;
@@ -74,18 +76,16 @@ public class ProfileCommand extends Command {
         FieldValidation fieldValidation = new FieldValidation();
 
         try {
-            fieldValidation.validate(lastName);
             fieldValidation.validate(login);
-            fieldValidation.validate(firstName);
         } catch (ValidationException e) {
             LOG.error(ErrorMessage.ERR_FIELD_INVALID);
             httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
-            throw new AppException(e);
+            throw new AppException(e.getMessage());
         }
 
         UserDAO userDAO = new UserDAO();
 
-        User user = (User) httpServletRequest.getAttribute("user");
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

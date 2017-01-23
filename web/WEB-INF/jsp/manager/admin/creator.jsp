@@ -20,14 +20,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <i class="fa fa-envelope"></i>
-                <h1><fmt:message key="creator"/>/</h1>
-                <p><fmt:message key="creator.info"/></p>
+                <h1><fmt:message key="tours.edit"/>/</h1>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
+        <mt:error errorMessage="${requestScope.errorMessage}"/>
+
         <form method="post" action="controller">
             <input type="hidden" name="command" value="creator">
             <input type="hidden" name="id" value="${requestScope.tour.id}">
@@ -81,7 +82,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success"><fmt:message key="creator.create"/></button>
+            <button type="submit" class="btn btn-success"><fmt:message key="ok"/></button>
         </form>
     </div>
 

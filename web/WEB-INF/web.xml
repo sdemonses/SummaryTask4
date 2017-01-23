@@ -32,7 +32,7 @@
 
         <init-param>
             <param-name>client</param-name>
-            <param-value>profile order</param-value>
+            <param-value> order</param-value>
         </init-param>
 
         <init-param>
@@ -42,12 +42,12 @@
 
         <init-param>
             <param-name>common</param-name>
-            <param-value>logout noCommand password</param-value>
+            <param-value>logout noCommand password profile</param-value>
         </init-param>
 
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login signUp index contact about language tour filter banned code</param-value>
+            <param-value>login signUp index contact language tour filter banned code </param-value>
         </init-param>
     </filter>
 

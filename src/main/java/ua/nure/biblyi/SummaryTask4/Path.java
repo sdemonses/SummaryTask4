@@ -22,6 +22,8 @@ public class Path {
 
     public static final String PAGE_MANAGER_PROFILE ="/WEB-INF/jsp/manager/management.jsp";
 
+    public static final String PAGE_MANAGER_PROFILE_POST ="controller?command=management";
+
     public static final String PAGE_CREATOR = "/WEB-INF/jsp/manager/admin/creator.jsp";
 
     public static final String PAGE_USERS = "/WEB-INF/jsp/manager/admin/users.jsp";
@@ -34,4 +36,7 @@ public class Path {
     public static final String PAGE_SALE = "/WEB-INF/jsp/manager/sale.jsp";
 
 
+    public static final String PAGE_CONTACT = "/WEB-INF/jsp/contact.jsp";
+
+    public static final String PAGE_CONTACT_POST = "controller?command=contact";
 }

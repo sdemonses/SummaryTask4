@@ -31,11 +31,7 @@
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
 
-            <c:if test="${not empty requestScope.errorMessage}">
-                <div class="alert alert-danger">
-                    <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-                </div>
-            </c:if>
+            <mt:error errorMessage="${requestScope.errorMessage}"/>
 
             <div class="input-group">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>

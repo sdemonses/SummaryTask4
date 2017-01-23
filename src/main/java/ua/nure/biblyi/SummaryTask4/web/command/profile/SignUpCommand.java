@@ -100,7 +100,7 @@ public class SignUpCommand extends Command {
         LOG.trace("Insert in DB: user --> " + user);
         try {
             user = userDAO.insert(user);
-            Sender sender = new Sender("epamtour@gmail.com", "awdrgyjil");
+            Sender sender = new Sender();
             sender.send("Регистрация в Epam Tour", "Здравствуйте " + lastName + " " + firstName + ".\nВаш код: " + user.getActivationCode(),  email);
         } catch (DuplicateException e) {
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);

@@ -8,12 +8,12 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
+<mt:myTag />
 <html>
 <c:set var="title" value="Profile"/>
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 <body>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
-
 <div class="page-title-container">
     <div class="container">
         <div class="row">
@@ -28,11 +28,7 @@
 
 <div class="row">
     <div class="col-sm-offset-1 col-sm-4 contact-form">
-        <c:if test="${not empty requestScope.errorMessage}">
-            <div class="alert alert-danger">
-                <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-            </div>
-        </c:if>
+       <mt:error errorMessage="${requestScope.errorMessage}"/>
 
         <%@include file="/WEB-INF/jspf/account.jspf"%>
     </div>

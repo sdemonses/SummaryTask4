@@ -34,11 +34,7 @@
         <form role="form" action="controller" method="post">
             <input type="hidden" name="command" value="signUp"/>
 
-            <c:if test="${not empty requestScope.errorMessage}">
-                <div class="alert alert-danger">
-                    <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
-                </div>
-            </c:if>
+            <mt:error errorMessage="${requestScope.errorMessage}"/>
 
             <div class="form-group">
 
