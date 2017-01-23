@@ -58,7 +58,6 @@ public class Controller extends HttpServlet {
         LOG.trace("Forward address --> " + forward);
 
         LOG.debug("Controller finished, now go to forward address --> " + forward);
-
         if(TypeHttpRequest.POST == type){
             LOG.debug("Send Redirect to " + forward );
             response.sendRedirect(forward);

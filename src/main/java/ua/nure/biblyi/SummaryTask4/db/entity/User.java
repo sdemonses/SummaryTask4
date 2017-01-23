@@ -3,6 +3,8 @@ package ua.nure.biblyi.SummaryTask4.db.entity;
 import ua.nure.biblyi.SummaryTask4.db.Role;
 import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 
+import java.util.Random;
+
 /**
  * @author Biblyi Dmytro
  */
@@ -16,6 +18,8 @@ public class User extends Entity {
     private Role role;
     private UserStatus userStatus;
 
+    private int activationCode;
+
     @Override
     public String toString() {
         return "User{" +
@@ -26,6 +30,10 @@ public class User extends Entity {
                 ", role=" + role +
                 ", userStatus=" + userStatus +
                 '}';
+    }
+
+    public User(){
+        activationCode = new Random().nextInt(1000000);
     }
 
     public String getLogin() {
@@ -83,5 +91,13 @@ public class User extends Entity {
 
     public void setUserStatus(int id) {
         this.userStatus = UserStatus.getType(id);
+    }
+
+    public int getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(int activationCode) {
+        this.activationCode = activationCode;
     }
 }

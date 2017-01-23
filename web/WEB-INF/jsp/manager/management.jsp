@@ -29,6 +29,12 @@
 
 <div class="row">
     <div class="col-sm-offset-1 col-sm-4 contact-form">
+        <c:if test="${not empty requestScope.errorMessage}">
+            <div class="alert alert-danger">
+                <strong><fmt:message key="error"/></strong> ${requestScope.errorMessage}
+            </div>
+        </c:if>
+
         <%@include file="/WEB-INF/jspf/account.jspf" %>
 
 
@@ -69,7 +75,7 @@
                                 <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="paid" name="com">
                                 <input type="hidden" value="order" name="type">
-                                <button type="submit" class="btn-block"
+                                <button type="submit" class="btn btn-success"
                                 ><fmt:message key="management.paid"/></button>
                             </form>
 
@@ -78,7 +84,7 @@
                                 <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="canceled" name="com">
                                 <input type="hidden" value="order" name="type">
-                                <button type="submit" class="btn-block"
+                                <button type="submit" class="btn btn-danger"
                                 ><fmt:message key="management.canceled"/></button>
                             </form>
                         </td>
@@ -90,7 +96,7 @@
                                 <input type="hidden" value="${order.id}" name="id">
                                 <input type="hidden" value="register" name="com">
                                 <input type="hidden" value="order" name="type">
-                                <button type="submit" class="btn-block"
+                                <button type="submit" class="btn btn-default"
                                 ><fmt:message key="tours.register"/></button>
                             </form>
                         </td>

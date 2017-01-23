@@ -1,7 +1,9 @@
 package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
+import ua.nure.biblyi.SummaryTask4.core.Sender;
 import ua.nure.biblyi.SummaryTask4.core.validation.EmailValidation;
 import ua.nure.biblyi.SummaryTask4.core.validation.FieldValidation;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
@@ -61,8 +63,6 @@ public class SignUpCommand extends Command {
 
         try {
             fieldValidation.validate(login);
-            fieldValidation.validate(firstName);
-            fieldValidation.validate(lastName);
         } catch (ValidationException validationException) {
             LOG.error(ErrorMessage.ERR_FIELD_INVALID);
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
@@ -92,24 +92,29 @@ public class SignUpCommand extends Command {
         user.setLastName(lastName);
         user.setLogin(login);
         user.setEmail(email);
-        user.setRole(Role.ADMIN.ordinal());
-        user.setPassword(password);
+        user.setRole(Role.CLIENT.ordinal());
+        user.setPassword(DigestUtils.md5Hex(password));
         user.setUserStatus(UserStatus.NOCONFIRMED.ordinal());
+
 
         LOG.trace("Insert in DB: user --> " + user);
         try {
             user = userDAO.insert(user);
+            Sender sender = new Sender("epamtour@gmail.com", "awdrgyjil");
+            sender.send("Регистрация в Epam Tour", "Здравствуйте " + lastName + " " + firstName + ".\nВаш код: " + user.getActivationCode(),  email);
         } catch (DuplicateException e) {
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_UP);
             throw new AppException(ErrorMessage.ERR_LOGIN_NOT_FREE);
         }
 
+
+        httpSession.setAttribute("userStatus", user.getUserStatus());
         httpSession.setAttribute("user", user);
 
         Role userRole = user.getRole();
         LOG.trace("userRole --> " + userRole);
         httpSession.setAttribute("userRole", userRole);
         LOG.debug("SignUpCommand.doPost finish");
-        return Path.PAGE_INDEX;
+        return Path.PAGE_REDIRECT_POST;
     }
 }

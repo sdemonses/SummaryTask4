@@ -4,6 +4,7 @@ package ua.nure.biblyi.SummaryTask4.web.filter;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.Role;
+import ua.nure.biblyi.SummaryTask4.db.UserStatus;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -92,6 +93,11 @@ public class CommandAccessFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
         if (session == null) {
+            return false;
+        }
+
+        UserStatus userStatus = (UserStatus) session.getAttribute("userStatus");
+        if(userStatus!=null){
             return false;
         }
 

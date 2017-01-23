@@ -1,11 +1,11 @@
 package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
 import ua.nure.biblyi.SummaryTask4.db.entity.User;
 import ua.nure.biblyi.SummaryTask4.exception.AppException;
-import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 import ua.nure.biblyi.SummaryTask4.web.TypeHttpRequest;
 import ua.nure.biblyi.SummaryTask4.web.command.Command;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
  * Change password command.
  *
  * @author D.Biblyi
- *
  */
 public class PasswordCommand extends Command {
     private final static Logger LOG = Logger.getLogger(PasswordCommand.class);
@@ -42,33 +41,32 @@ public class PasswordCommand extends Command {
         String oldPass = httpServletRequest.getParameter("oldPassword");
         String password = httpServletRequest.getParameter("password");
         String repeatPassword = httpServletRequest.getParameter("repeatPassword");
-        if(password.length()<4){
+        if (password.length() < 4) {
             LOG.error(ErrorMessage.ERR_SMALL_LOGIN);
             httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
             throw new AppException(ErrorMessage.ERR_SMALL_LOGIN);
         }
 
-        if(!password.equals(repeatPassword)){
+        if (!password.equals(repeatPassword)) {
             LOG.error(ErrorMessage.ERR_DIFFERENT_PASSWORD);
             httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
             throw new AppException(ErrorMessage.ERR_DIFFERENT_PASSWORD);
         }
         UserDAO userDAO = new UserDAO();
         User user = (User) httpServletRequest.getSession().getAttribute("user");
-        try {
-            if(!userDAO.getByPK((Long)user.getId()).getPassword().equals(oldPass)){
-                LOG.error(ErrorMessage.ERR_WRONG_PASSWORD);
-                httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
-                throw new AppException(ErrorMessage.ERR_WRONG_PASSWORD);
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
+        oldPass = DigestUtils.md5Hex(oldPass);
+
+        if (!userDAO.getByPK((Long) user.getId()).getPassword().equals(oldPass)) {
+            LOG.error(ErrorMessage.ERR_WRONG_PASSWORD);
+            httpServletRequest.setAttribute("path", Path.PAGE_PROFILE);
+            throw new AppException(ErrorMessage.ERR_WRONG_PASSWORD);
         }
-        user.setPassword(password);
+
+        user.setPassword(DigestUtils.md5Hex(password));
         LOG.debug("PasswordCommand.doPost finish");
 
 
-            userDAO.update(user);
+        userDAO.update(user);
 
         return Path.PAGE_PROFILE_POST;
     }

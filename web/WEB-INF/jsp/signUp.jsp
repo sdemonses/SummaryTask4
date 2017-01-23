@@ -5,6 +5,7 @@
   Time: 13:05
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
@@ -99,7 +100,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn"><fmt:message key="signUp"/></button>
+            <button type="submit" class="btn btn-success"><fmt:message key="signUp"/></button>
         </form>
 
     </div>

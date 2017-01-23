@@ -6,15 +6,12 @@ import org.apache.log4j.PropertyConfigurator;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Created by dmitry on 17.01.17.
  */
-public class ContextListener implements ServletContextListener {
-    private static final Logger LOG = Logger.getLogger(ContextListener.class);
+public class ConfigureListener implements ServletContextListener {
+    private static final Logger LOG = Logger.getLogger(ConfigureListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -64,7 +61,7 @@ public class ContextListener implements ServletContextListener {
     }
 
     private void log(String msg) {
-        System.out.println("[ContextListener] " + msg);
+        System.out.println("[ConfigureListener] " + msg);
     }
 
 }

@@ -34,6 +34,7 @@ public class CommandContainer {
         commands.put("users", new UserCommand());
         commands.put("banned", new BannedCommand());
         commands.put("order", new OrderCommand());
+        commands.put("code", new CodeCommand());
 
         LOG.debug("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());

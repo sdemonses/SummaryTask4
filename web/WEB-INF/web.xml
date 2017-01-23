@@ -47,7 +47,7 @@
 
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login signUp index contact about language tour filter banned</param-value>
+            <param-value>login signUp index contact about language tour filter banned code</param-value>
         </init-param>
     </filter>
 
@@ -68,7 +68,7 @@
 
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/WEB-INF/*</url-pattern>
+        <url-pattern>/*</url-pattern>
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
@@ -90,7 +90,7 @@
         Context listener
     =============================================================-->
     <listener>
-        <listener-class>ua.nure.biblyi.SummaryTask4.web.listener.ContextListener</listener-class>
+        <listener-class>ua.nure.biblyi.SummaryTask4.web.listener.ConfigureListener</listener-class>
     </listener>
 
 

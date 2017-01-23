@@ -11,9 +11,9 @@ DROP TABLE countries;
 DROP TABLE hotels;
 DROP TABLE tours;
 DROP TABLE type;
-DROP TABLE users;
 DROP TABLE userStatus;
 DROP TABLE orders;
+DROP TABLE users;
 
 CREATE TABLE roles (
   id   INTEGER PRIMARY KEY,
@@ -27,7 +27,7 @@ INSERT INTO roles VALUES (2, 'manager');
 CREATE TABLE users (
   id            INTEGER PRIMARY KEY AUTO_INCREMENT,
   login         VARCHAR(25)  NOT NULL UNIQUE,
-  email         VARCHAR(40)  NOT NULL UNIQUE,
+  email         VARCHAR(40)  NOT NULL,
   password      VARCHAR(255) NOT NULL,
   first_name    VARCHAR(50),
   last_name     VARCHAR(50),
@@ -35,9 +35,9 @@ CREATE TABLE users (
   role_id       INTEGER      NOT NULL REFERENCES roles (id)
 );
 
-INSERT INTO users VALUES (DEFAULT, 'admin', 'sdemonses@gmail.com', 'admin', 'Ivan', 'Ivanov',1, 0);
-INSERT INTO users VALUES (DEFAULT, 'client', 'sdemones@gmail.com', 'client', 'Petr', 'Petrov',1, 1);
-INSERT INTO users VALUES (DEFAULT, 'manager', 'sdemoses@gmail.com', 'manager', 'Дмитрий', 'Дмитриев',1, 2);
+INSERT INTO users VALUES (DEFAULT, 'admin', 'sdemonses@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Ivan', 'Ivanov',1, 0);
+INSERT INTO users VALUES (DEFAULT, 'client', 'sdemones@gmail.com', '62608e08adc29a8d6dbc9754e659f125', 'Petr', 'Petrov',1, 1);
+INSERT INTO users VALUES (DEFAULT, 'manager', 'sdemoses@gmail.com', '1d0258c2440a8d19e716292b231e3190', 'Дмитрий', 'Дмитриев',1, 2);
 
 CREATE TABLE userStatus (
   id   INTEGER PRIMARY KEY,

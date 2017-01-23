@@ -33,6 +33,7 @@ public class EncodingFilter implements Filter {
         if (requestEncoding == null) {
             LOG.trace("Request encoding = null, set encoding --> " + encoding);
             servletRequest.setCharacterEncoding(encoding);
+            servletResponse.setContentType("text/html; charset=UTF-8");
         }
 
         LOG.debug("EncodingFilter.doFilter finish");

@@ -1,5 +1,6 @@
 package ua.nure.biblyi.SummaryTask4.web.command.profile;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.UserDAO;
@@ -56,12 +57,15 @@ public class LoginCommand extends Command {
         User user = userDAO.getByLogin(login);
         LOG.trace("Found in DB: user --> " + user);
 
-        if (user == null || !password.equals(user.getPassword())) {
+        if (user == null || !DigestUtils.md5Hex(password).equals(user.getPassword())) {
             httpServletRequest.setAttribute("path", Path.PAGE_SIGN_IN);
             throw new AppException("Wrong password or login");
         }
 
-        if (user.getUserStatus() == UserStatus.BAN){
+        if (user.getUserStatus() == UserStatus.BAN ){
+            return Path.PAGE_REDIRECT_POST;
+        }else if(user.getUserStatus() == UserStatus.NOCONFIRMED){
+            httpServletRequest.setAttribute("userStatus", user.getUserStatus());
             return Path.PAGE_REDIRECT_POST;
         }
 
