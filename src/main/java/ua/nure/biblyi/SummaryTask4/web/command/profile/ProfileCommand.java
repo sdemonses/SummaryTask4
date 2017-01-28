@@ -52,6 +52,13 @@ public class ProfileCommand extends Command {
         }
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orderList = orderDAO.getOrderList(user.getId());
+        for (Order order :
+                orderList) {
+            order.setSale(orderList.size()/3*order.getSaleStep());
+            while(order.getSale()>order.getSaleMax()){
+                order.setSale(order.getSale() - order.getSaleStep());
+            }
+        }
         httpServletRequest.setAttribute("orders", orderList);
 
         return Path.PAGE_PROFILE;

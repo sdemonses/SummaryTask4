@@ -42,6 +42,7 @@
                 <th><fmt:message key="cabinet.table.person"/></th>
                 <th><fmt:message key="cabinet.table.cost"/></th>
                 <th><fmt:message key="cabinet.table.hotel"/></th>
+                <th><fmt:message key="cabinet.table.sale"/></th>
                 <th><fmt:message key="cabinet.table.duration"/></th>
                 <th><fmt:message key="cabinet.table.status"/></th>
             </tr>
@@ -53,6 +54,7 @@
                     <td>${order.tour.person}</td>
                     <td>${order.tour.cost}</td>
                     <td>${order.tour.hotel.name}</td>
+                    <td>${order.sale}</td>
                     <td>${order.tour.duration}</td>
                     <td>${order.status}</td>
                 </tr>

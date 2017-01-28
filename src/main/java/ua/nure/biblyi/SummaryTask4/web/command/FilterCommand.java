@@ -3,6 +3,7 @@ package ua.nure.biblyi.SummaryTask4.web.command;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.Path;
 import ua.nure.biblyi.SummaryTask4.core.filters.Filter;
+import ua.nure.biblyi.SummaryTask4.core.filters.HotFilter;
 import ua.nure.biblyi.SummaryTask4.core.filters.HotelFilter;
 import ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO.TourDAO;
 import ua.nure.biblyi.SummaryTask4.db.Status;
@@ -48,14 +49,17 @@ public class FilterCommand extends Command {
         String countPersonStr = httpServletRequest.getParameter("countPerson");
         String starsStr = httpServletRequest.getParameter("stars");
         String typeStr = httpServletRequest.getParameter("type").toUpperCase();
+        String hotStr = httpServletRequest.getParameter("hot").toUpperCase();
 
         Type type = (typeStr.equals("ALL"))?null:Type.valueOf(typeStr);
         int from, to, countPerson, stars;
+        Status hot;
         try {
             from = (fromStr.isEmpty())?0:Integer.parseInt(fromStr);
             to = (toStr.isEmpty())?0:Integer.parseInt(toStr);
             countPerson = (countPersonStr.equals("all"))?0:Integer.parseInt(countPersonStr);
             stars = (starsStr.equals("all"))?0:Integer.parseInt(starsStr);
+            hot = (hotStr.equals("ALL"))?null:Status.valueOf(hotStr);
         } catch (NumberFormatException e) {
             LOG.error("Invalid data", e);
             httpServletRequest.setAttribute("path", Path.PAGE_TOURS);
@@ -66,7 +70,7 @@ public class FilterCommand extends Command {
         tourList = tourDAO.getTours(Status.HOT);
             tourList.addAll(tourDAO.getTours(Status.EMPTY));
 
-        Filter<Tour> filter = new HotelFilter(type, from, to, countPerson, stars);
+        Filter<Tour> filter = new HotFilter(type, from, to, countPerson, stars, hot);
         LOG.trace(filter.filter(tourList));
         httpServletRequest.setAttribute("tours", tourList);
 

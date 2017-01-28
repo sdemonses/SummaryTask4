@@ -18,9 +18,9 @@
     <h1><fmt:message key="travel"/></h1>
 </div>
 <div class="content-2">
-    <h2>Welcome to Bon Voyage</h2>
+    <h2><fmt:message key="welcome"/></h2>
     <div class="content-text">
-        <div class="content-text-1">Bon Voyage is a progressive traveling agency that offers its clients a wide variety of tours and destinations to enjoy. With our traveling services you can get wherever you want to - from the American mountain tops to Australian planes, and discover the whole planet eventually.
+        <div class="content-text-1">Epam Tour is a progressive traveling agency that offers its clients a wide variety of tours and destinations to enjoy. With our traveling services you can get wherever you want to - from the American mountain tops to Australian planes, and discover the whole planet eventually.
         </div>
         <div class="content-text-2"> Moreover, our team of professional  travel guides and tour managers can offer you a tour designed according to your needs and wishes. We can handle all traveling issues without any extra cost.
         </div>

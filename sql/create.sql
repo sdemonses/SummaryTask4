@@ -132,7 +132,10 @@ CREATE TABLE orders (
   id           INTEGER PRIMARY KEY AUTO_INCREMENT,
   user_id      INTEGER NOT NULL,
   status_id    INTEGER NOT NULL,
-  tour_id      INTEGER NOT NULL,
+  tour_id INTEGER NOT NULL,
+  FOREIGN KEY (tour_id) REFERENCES tours(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   maxValueSale INTEGER,
   step         INTEGER
 );

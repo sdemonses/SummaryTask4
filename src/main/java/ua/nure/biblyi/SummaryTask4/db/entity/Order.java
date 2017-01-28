@@ -7,6 +7,7 @@ import ua.nure.biblyi.SummaryTask4.db.Status;
  */
 public class Order extends Entity {
 
+    private static final long serialVersionUID = -2193770164751781381L;
     private User user;
 
     private Tour tour;
@@ -15,7 +16,11 @@ public class Order extends Entity {
 
     private int saleStep;
 
+    private int sale;
+
     private Status status;
+
+
 
     @Override
     public String toString() {
@@ -65,5 +70,13 @@ public class Order extends Entity {
 
     public void setStatus(int status) {
         this.status = Status.getType(status);
+    }
+
+    public int getSale() {
+        return sale;
+    }
+
+    public void setSale(int sale) {
+        this.sale = sale;
     }
 }

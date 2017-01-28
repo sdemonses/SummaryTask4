@@ -29,7 +29,7 @@ public class ManagerCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, TypeHttpRequest type) throws AppException {
-        LOG.debug("ManagerCommand.execute start");;
+        LOG.debug("ManagerCommand.execute start");
         String result = null;
         if (TypeHttpRequest.POST == type) {
             result = Path.PAGE_ERROR_PAGE;

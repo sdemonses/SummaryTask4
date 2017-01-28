@@ -3,7 +3,6 @@ package ua.nure.biblyi.SummaryTask4.db.DAO.ImplDAO;
 import org.apache.log4j.Logger;
 import ua.nure.biblyi.SummaryTask4.db.DAO.abstrDAO.AbstractJDBCDao;
 import ua.nure.biblyi.SummaryTask4.db.entity.Order;
-import ua.nure.biblyi.SummaryTask4.db.entity.Tour;
 import ua.nure.biblyi.SummaryTask4.exception.DAOException;
 import ua.nure.biblyi.SummaryTask4.exception.ErrorMessage;
 
@@ -62,7 +61,7 @@ public class OrderDAO extends AbstractJDBCDao<Order, Long> {
             }
 
             Long toutId = rs.getLong("tour_id");
-            if(userId!=0){
+            if(toutId!=0){
                 object.setTour(new TourDAO().getByPK(toutId));
             }
             object.setSaleStep(rs.getInt("step"));

@@ -53,6 +53,7 @@
             <th><fmt:message key="cabinet.table.tourName"/></th>
             <th><fmt:message key="cabinet.table.cost"/></th>
             <th><fmt:message key="cabinet.table.hotel"/></th>
+            <th><fmt:message key="cabinet.table.sale"/></th>
             <th><fmt:message key="cabinet.table.status"/></th>
             <th><fmt:message key="cabinet.table.changeStatus"/></th>
             </thead>
@@ -62,6 +63,7 @@
                     <td>${order.tour.name}</td>
                     <td>${order.tour.cost}</td>
                     <td>${order.tour.hotel.name}</td>
+                    <td>${order.sale}</td>
                     <td>${order.status}</td>
 
                     <c:if test="${order.status.name == 'register'}">

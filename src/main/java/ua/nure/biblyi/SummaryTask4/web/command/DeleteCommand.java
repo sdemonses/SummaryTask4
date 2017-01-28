@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
             result = doPost(httpServletRequest, httpServletResponse);
         }
         LOG.debug("DeleteCommand.execute finish");
-        ;
+
         return result;
     }
 
@@ -38,9 +38,7 @@ public class DeleteCommand extends Command {
         LOG.debug("DeleteCommand.doPost start");
         Long id = Long.parseLong(httpServletRequest.getParameter("id"));
         TourDAO tourDAO = new TourDAO();
-
-            tourDAO.delete(id);
-
+        tourDAO.delete(id);
         LOG.debug("DeleteCommand.doPost finish");
         return Path.PAGE_TOURS_POST;
     }

@@ -69,6 +69,14 @@
                     </c:forEach>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="hot"><fmt:message key="tours.filter.status"/></label>
+                <select name="hot" id="hot" class="form-control">
+                    <option value="all"><fmt:message key="tours.filter.all"/></option>
+                    <option value="hot"><fmt:message key="tours.filter.hot"/></option>
+                    <option value="empty"><fmt:message key="tours.filter.empty"/></option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-success"><fmt:message key="tours.filter"/></button>
         </form>
     </div>
